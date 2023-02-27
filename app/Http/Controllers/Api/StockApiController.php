@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Modules\StartDateSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class StockApiController extends Controller
 {
@@ -16,7 +17,12 @@ class StockApiController extends Controller
     {
         $data = $request->query();
         $date = (new StartDateSetting($data['segment']))->selectInterval();
-        return json_decode(file_get_contents("https://iss.moex.com/iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json?iss.meta=off&interval={$data['time']}&from=$date"));
+
+        return Http::get("https://iss.moex.com/iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json", [
+            'iss.meta' => 'off',
+            'interval' => $data['time'],
+            'from' => $date,
+        ])->throw()->json('candles.data');
     }
 
     //Получение данных по API иностранной биржи.
@@ -28,6 +34,13 @@ class StockApiController extends Controller
         } else {
             $interval = $data['interval'] . 'min';
         }
-        return json_decode(file_get_contents("https://www.alphavantage.co/query?function=time_series_{$data['segment']}&symbol={$data['ticker']}&interval=$interval&apikey=$this->apikey"));
+
+        return Http::get("https://www.alphavantage.co/query", [
+            'function' => "time_series_{$data['segment']}",
+            'symbol' => $data['ticker'],
+            'market' => 'usd',
+            'interval' => $interval,
+            'apikey' => $this->apikey,
+        ])->throw()->json();
     }
 }

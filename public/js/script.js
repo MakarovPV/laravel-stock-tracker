@@ -1,4 +1,4 @@
-export {getDataFromApi, options};
+export {getDataFromApi, calculateBalance, options};
 
 //Раскрытие выпадающего дочернего меню.
 $('#stock_category, #moscow_stock, #foreign_company_stock').on("click", function (e){
@@ -79,4 +79,14 @@ async function getDataFromApi(url, params)
     return await response.json()
 }
 
+function calculateBalance(id, arr)
+{
+    let first = arr[0].value
+    let last = arr[arr.length-1].value
+    if(first<last){
+        $(id).addClass('text-success').html('+' + (100 - (first / (last / 100))).toFixed(1) + '%')
+    } else {
+        $(id).addClass('text-danger').html('-' + (100 - (last / (first / 100))).toFixed(1) + '%')
+    }
+}
 

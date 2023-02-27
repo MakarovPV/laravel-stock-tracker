@@ -7,28 +7,44 @@
         <div class="row p-lg-5" >
             <div class="col-1"></div>
             <div class="col-5 card h-50 chart">
-                <h3 class="fw-bolder pt-3 pb-3 border-bottom">Изменения за день</h3>
+                <div class="pt-3 pb-3 border-bottom row">
+                    <div class="col-1"></div>
+                    <h3 class="col-8 fw-bolder">Изменения за день</h3>
+                    <h3 class="col-3" id="balance_day"></h3>
+                </div>
                 <canvas id="chart_data_day" class="pt-3"></canvas>
             </div>
 
             <div class="col-1"></div>
 
             <div class="col-5 card h-50 ml-4 chart">
-                <h3 class="fw-bolder pt-4 pb-3 border-bottom">Изменения за неделю</h3>
+                <div class="pt-3 pb-3 border-bottom row">
+                    <div class="col-1"></div>
+                    <h3 class="col-8 fw-bolder">Изменения за неделю</h3>
+                    <h3 class="col-3" id="balance_week"></h3>
+                </div>
                 <canvas id="chart_data_week" class="pt-4"></canvas>
             </div>
 
             <div class="pt-4"></div>
             <div class="col-1"></div>
             <div class="col-5 card h-50 chart">
-                <h3 class="fw-bolder pt-3 pb-3 border-bottom">Изменения за месяц</h3>
+                <div class="pt-3 pb-3 border-bottom row">
+                    <div class="col-1"></div>
+                    <h3 class="col-8 fw-bolder">Изменения за месяц</h3>
+                    <h3 class="col-3" id="balance_month"></h3>
+                </div>
                 <canvas id="chart_data_month" class="pt-3"></canvas>
             </div>
 
             <div class="col-1"></div>
 
             <div class="col-5 card h-50 ml-4 chart">
-                <h3 class="fw-bolder pt-4 pb-3 border-bottom">Изменения за год</h3>
+                <div class="pt-3 pb-3 border-bottom row">
+                    <div class="col-1"></div>
+                    <h3 class="col-8 fw-bolder">Изменения за год</h3>
+                    <h3 class="col-3" id="balance_year"></h3>
+                </div>
                 <canvas id="chart_data_year" class="pt-4"></canvas>
             </div>
         </div>

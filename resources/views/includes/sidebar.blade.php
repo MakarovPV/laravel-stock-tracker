@@ -26,7 +26,7 @@
         </ul>
         <li class="list-group-item list-group-item-action" id="divs">Дивиденды</li>
         <li class="list-group-item list-group-item-action" id="valuta">Валюта</li>
-        <li class="list-group-item list-group-item-action" id="cryptovaluta">Криптовалюта</li>
+        <li class="list-group-item list-group-item-action" id="crypto">Криптовалюта</li>
         @include('includes.modal')
 
     </ul>

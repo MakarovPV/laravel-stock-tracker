@@ -1,9 +1,8 @@
 import {Charts} from "./charts";
-import {getDataFromApi, options} from "./script";
+import {calculateBalance, getDataFromApi, options} from "./script";
 import {DataFactory} from "./DataFactory";
 
 //Диаграмма с данными за неделю.
-
 const records_count = 7
 options.time = 60
 options.interval = 60
@@ -13,5 +12,6 @@ let json_api = await getDataFromApi(`/api/${options.source}`, new URLSearchParam
 let exchange = new DataFactory(options.source)
 
 exchange.fillArrayDataFromJson(json_api)
+calculateBalance('#balance_week', exchange['data_array'])
 
 Charts('chart_data_week', exchange['data_array']);

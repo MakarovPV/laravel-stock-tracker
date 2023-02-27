@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\StockController::class, 'index']);
-Route::post('/', [App\Http\Controllers\StockController::class, 'store']);
+Route::group(['middleware' => 'auth.check'], function(){
+    Route::get('/', [App\Http\Controllers\StockController::class, 'index']);
+    Route::post('/', [App\Http\Controllers\StockController::class, 'store']);
+});
+
 
 Auth::routes();
 
