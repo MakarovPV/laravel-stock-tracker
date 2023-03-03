@@ -1,6 +1,8 @@
 import Chart from 'chart.js/auto'
 
-export function Charts(element_id, options)
+export {Charts}
+
+function Charts(element_id, options)
 {
     return (async function() {
         const charts = new Chart(

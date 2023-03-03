@@ -1,7 +1,7 @@
-export {getDataFromApi, calculateBalance, options};
+export {options};
 
 //Раскрытие выпадающего дочернего меню.
-$('#stock_category, #moscow_stock, #foreign_company_stock').on("click", function (e){
+$('#stock_category, #moscow_stock, #foreign_company_stock, #crypto').on("click", function (e){
     e.stopImmediatePropagation();
     showChildList(this)
 });
@@ -37,9 +37,6 @@ let options = {
     source: getCookie('source'),
     stock_name: getCookie('stock_name'),
     ticker: getCookie('ticker'),
-    time: 0,
-    segment: 0,
-    interval: 0
 }
 
 //Установка значения h1 в body.blade.
@@ -73,20 +70,4 @@ function send(stock_name, stock_ticker)
      })
 }
 
-async function getDataFromApi(url, params)
-{
-    let response = await fetch(url + '?' + params)
-    return await response.json()
-}
-
-function calculateBalance(id, arr)
-{
-    let first = arr[0].value
-    let last = arr[arr.length-1].value
-    if(first<last){
-        $(id).addClass('text-success').html('+' + (100 - (first / (last / 100))).toFixed(1) + '%')
-    } else {
-        $(id).addClass('text-danger').html('-' + (100 - (last / (first / 100))).toFixed(1) + '%')
-    }
-}
 

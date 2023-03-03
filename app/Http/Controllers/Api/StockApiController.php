@@ -20,7 +20,7 @@ class StockApiController extends Controller
 
         return Http::get("https://iss.moex.com/iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json", [
             'iss.meta' => 'off',
-            'interval' => $data['time'],
+            'interval' => $data['interval'],
             'from' => $date,
         ])->throw()->json('candles.data');
     }
@@ -29,18 +29,26 @@ class StockApiController extends Controller
     public function foreign(Request $request)
     {
         $data = $request->query();
-        if($data['interval'] == 0) {
-            $interval = '60min';
-        } else {
-            $interval = $data['interval'] . 'min';
-        }
 
         return Http::get("https://www.alphavantage.co/query", [
             'function' => "time_series_{$data['segment']}",
             'symbol' => $data['ticker'],
             'market' => 'usd',
-            'interval' => $interval,
+            'interval' => $data['interval'] . 'min',
             'apikey' => $this->apikey,
+        ])->throw()->json();
+    }
+
+    //Получение данных по API криптовалюты.
+    public function cryptocurrency(Request $request)
+    {
+        $data = $request->query();
+
+        return Http::get("https://min-api.cryptocompare.com/data/v2/{$data['segment']}", [
+            'fsym' => $data['ticker'],
+            'tsym' => 'rub',
+            'aggregate' => $data['interval'],
+            'limit' => $data['limit'],
         ])->throw()->json();
     }
 }

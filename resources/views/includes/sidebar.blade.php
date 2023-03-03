@@ -27,6 +27,14 @@
         <li class="list-group-item list-group-item-action" id="divs">Дивиденды</li>
         <li class="list-group-item list-group-item-action" id="valuta">Валюта</li>
         <li class="list-group-item list-group-item-action" id="crypto">Криптовалюта</li>
+        <ul class="list-group list-group-flush text-center d-none" id="moscow_stock_list">
+            @foreach($crypto as $crypto_item)
+                <li class="list-group-item list-group-item-action crypto-item list-data-item" data-source="{{$crypto_item->stock_exchange}}" id="{{$crypto_item->stock_ticker_symbol}}">{{$crypto_item->stock_name}}</li>
+            @endforeach
+            <button type="button" id="new_crypto" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modal">
+                <li class="list-group-item list-group-item-action" id="moscow_add">Добавить</li>
+            </button>
+        </ul>
         @include('includes.modal')
 
     </ul>
