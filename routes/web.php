@@ -18,6 +18,5 @@ Route::group(['middleware' => 'auth.check'], function(){
     Route::post('/', [App\Http\Controllers\StockController::class, 'store']);
 });
 
-
 Auth::routes();
 

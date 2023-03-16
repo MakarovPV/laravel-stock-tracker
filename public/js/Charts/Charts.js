@@ -31,7 +31,7 @@ function Charts(element_id, options)
                             hoverBorderColor: 'rgb(211, 1, 11)',
                             hoverBorderWidth: 2,
                             pointBorderColor: 'rgb(111, 1, 1)',
-                            pointBorderWidth: 0.4,
+                            pointBorderWidth: 0.2,
                             pointHoverBackgroundColor: 'rgb(211, 1, 11)',
                             showLine: true,
                         }

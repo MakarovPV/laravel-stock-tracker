@@ -10,10 +10,9 @@ class StockController extends Controller
 {
     public function index()
     {
-        $stocks_moscow = MonitoredStock::where('stock_exchange', 'moscow')->where('user_id', Auth::id())->get();
-        $stocks_foreign = MonitoredStock::where('stock_exchange', 'foreign')->where('user_id', Auth::id())->get();
-        $crypto = MonitoredStock::where('stock_exchange', 'crypto')->where('user_id', Auth::id())->get();
-        $products = MonitoredStock::where('stock_exchange', 'product')->where('user_id', Auth::id())->get();
+        $stocks_moscow = MonitoredStock::where('stock_exchange', 'moscow')->where('user_id', Auth::id())->toBase()->get();
+        $stocks_foreign = MonitoredStock::where('stock_exchange', 'foreign')->where('user_id', Auth::id())->toBase()->get();
+        $crypto = MonitoredStock::where('stock_exchange', 'crypto')->where('user_id', Auth::id())->toBase()->get();
         return view('index', compact(['stocks_moscow', 'stocks_foreign', 'crypto']));
     }
 

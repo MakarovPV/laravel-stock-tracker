@@ -42,9 +42,8 @@ class ChartData {
 
     async buildChart()
     {
-        let json_from_api = await this.getDataFromApi()
+        let json_from_api = await this.getDataFromApi().then((response) => { return response.json() })
         let exchange = this.getObjFromFactory()
-
         exchange.fillArrayDataFromJson(json_from_api, this.parameters[this.source].limit)
 
         this.calculateBalance(`#balance_${this.parameters[this.source].date}`, exchange['data_array'])
@@ -53,9 +52,12 @@ class ChartData {
 
     async getDataFromApi()
     {
-        let response = await fetch(`/api/${this.source}` + '?' + new URLSearchParams(this.parameters[this.source]))
-            .then((response) => response.json())
-        return await response
+        return fetch(`/api/${this.source}` + '?' + new URLSearchParams(this.parameters[this.source]), {
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
     }
 
     getObjFromFactory()
