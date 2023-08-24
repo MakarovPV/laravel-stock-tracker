@@ -10,13 +10,23 @@ function Charts(element_id, options)
             {
                 type: 'line',
                 options: {
-                    animation: false,
+                    animation: true,
                     plugins: {
                         legend: {
-                            display: false
+                            display: false,
                         },
                         tooltip: {
                             enabled: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                lineWidth: 0.2,
+                            },
+                            ticks: {
+                                display: false
+                            },
                         }
                     }
                 },
@@ -27,12 +37,14 @@ function Charts(element_id, options)
                             data: options.map(row => row.value),
                             borderColor: select_color(options),
                             tension: 0.2,
-                            borderWidth: 2,
-                            hoverBorderColor: 'rgb(211, 1, 11)',
+                            borderWidth: 0.5,
+                            hoverBorderColor: 'rgb(54, 162, 235, 0.6)',
                             hoverBorderWidth: 2,
                             pointBorderColor: 'rgb(111, 1, 1)',
-                            pointBorderWidth: 0.2,
-                            pointHoverBackgroundColor: 'rgb(211, 1, 11)',
+                            pointBorderWidth: 0.05,
+                            pointHoverBackgroundColor: 'rgb(54, 162, 235, 0.3)',
+                            fill: true,
+                            backgroundColor: select_color(options),
                             showLine: true,
                         }
                     ]
@@ -42,11 +54,11 @@ function Charts(element_id, options)
     })();
 }
 
-//Изменение цвета кривой графика в зависимости от баланса, за определённый промежуток времени.
+//Изменение цвета кривой графика в зависимости от баланса.
 function select_color(arr)
 {
-    if(arr[0]['value'] > arr[arr.length-1]['value']) return 'red'
-    else if(arr[0]['value'] === arr[arr.length-1]['value']) return 'blue'
-    return 'green'
+    if(arr[0]['value'] > arr[arr.length-1]['value']) return 'rgb(255, 99, 132, 0.3)'
+    else if(arr[0]['value'] === arr[arr.length-1]['value']) return 'rgb(54, 162, 235, 0.3)'
+    return 'rgb(85, 222, 92, 0.3)'
 }
 

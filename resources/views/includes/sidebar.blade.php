@@ -1,4 +1,4 @@
-<div class="col-2 h-100 border shadow-lg bg-white">
+<div class="col-2  h-90 border shadow-lg bg-white">
     <ul class="list-group list-group-flush p-2" id="category_list">
         <li class="list-group-item list-group-item-action">Главная</li>
         <li class="list-group-item list-group-item-action" id="stock_category">Акции</li>
