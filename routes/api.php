@@ -18,6 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/moscow', [App\Http\Controllers\Api\StockApiController::class, 'moscow'])->name('moscow.stocks');
-Route::get('/foreign', [App\Http\Controllers\Api\StockApiController::class, 'foreign'])->name('foreign.stocks');
-Route::get('/crypto', [App\Http\Controllers\Api\StockApiController::class, 'cryptocurrency'])->name('cryptocurrency.stocks');
+Route::get('/moscow', [App\Http\Controllers\Api\MoscowStockDataApi::class, 'getDataFromApi'])->name('moscow.stocks');
+Route::get('/foreign', [App\Http\Controllers\Api\ForeignStockDataApi::class, 'getDataFromApi'])->name('foreign.stocks');
+Route::get('/crypto', [App\Http\Controllers\Api\CryptoDataApi::class, 'getDataFromApi'])->name('cryptocurrency.stocks');
