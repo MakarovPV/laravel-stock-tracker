@@ -52,10 +52,13 @@ class ChartData {
 
     async getDataFromApi()
     {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         return fetch(`/api/${this.source}` + '?' + new URLSearchParams(this.parameters[this.source]), {
             headers : {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
             }
         })
     }
