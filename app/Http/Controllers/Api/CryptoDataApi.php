@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Http;
 
 class CryptoDataApi implements StockDataApi
 {
-    //Получение данных по API криптовалюты.
+    /** Получение данных по API криптовалюты.
+     * @param Request $request
+     * @return mixed
+     */
     public function getDataFromApi(Request $request) : mixed
     {
         $data = $request->query();

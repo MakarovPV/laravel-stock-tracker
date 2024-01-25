@@ -18,5 +18,7 @@ Route::group(['middleware' => 'auth.check'], function(){
     Route::post('/', [App\Http\Controllers\StockController::class, 'store']);
 });
 
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
+
 Auth::routes();
 

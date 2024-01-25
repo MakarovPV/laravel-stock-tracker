@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Http;
 
 class ForeignStockDataApi implements StockDataApi
 {
-    //API-ключ для иностранной биржи
+    /** API-ключ для иностранной биржи
+     * @var string
+     */
     private $apikey = 'GQ12XD7I4I34URYY';
 
-    //Получение данных по API иностранной биржи.
+    /** Получение данных по API иностранной биржи.
+     * @param Request $request
+     * @return mixed
+     */
     public function getDataFromApi(Request $request) : mixed
     {
         $data = $request->query();

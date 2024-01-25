@@ -24,7 +24,7 @@
                 </button>
             </ul>
         </ul>
-        <li class="list-group-item list-group-item-action" id="divs">Дивиденды</li>
+        <li class="list-group-item list-group-item-action" id="divs">Облигации</li>
         <li class="list-group-item list-group-item-action" id="currency">Валюта</li>
         <li class="list-group-item list-group-item-action" id="crypto">Криптовалюта</li>
         <ul class="list-group list-group-flush text-center d-none" id="moscow_stock_list">

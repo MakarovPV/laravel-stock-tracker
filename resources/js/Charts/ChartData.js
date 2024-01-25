@@ -73,9 +73,9 @@ class ChartData {
         let first = data_array[0].value
         let last = data_array[data_array.length-1].value
         if(first<last){
-            $(elem_id).addClass('text-success').html('+' + (100 - (first / (last / 100))).toFixed(1) + '%')
+            $(elem_id).addClass('text-success').html('&#x25B2;' + (100 - (first / (last / 100))).toFixed(1) + '%')
         } else {
-            $(elem_id).addClass('text-danger').html('-' + (100 - (last / (first / 100))).toFixed(1) + '%')
+            $(elem_id).addClass('text-danger').html('&#x25BC;' + (100 - (last / (first / 100))).toFixed(1) + '%')
         }
     }
 }

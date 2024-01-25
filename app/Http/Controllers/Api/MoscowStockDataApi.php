@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Http;
 
 class MoscowStockDataApi implements StockDataApi
 {
-    //Получение данных по API московской биржи.
+    /** Получение данных по API московской биржи.
+     * @param Request $request
+     * @return mixed
+     */
     public function getDataFromApi(Request $request) : mixed
     {
         $data = $request->query();
@@ -24,7 +27,7 @@ class MoscowStockDataApi implements StockDataApi
                 'from' => $date,
             ])->throw()->json('candles.data');
         });
-
+        dd($result);
         return $result;
     }
 }

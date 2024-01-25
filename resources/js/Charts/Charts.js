@@ -17,6 +17,18 @@ function Charts(element_id, options)
                         },
                         tooltip: {
                             enabled: true
+                        },
+                        zoom: {
+                            zoom: {
+                                enabled: true,
+                                mode: 'x',
+                                speed: 0.1
+                            },
+                            pan: {
+                                enabled: true,
+                                mode: 'x',
+                                speed: 0.1
+                            }
                         }
                     },
                     scales: {
