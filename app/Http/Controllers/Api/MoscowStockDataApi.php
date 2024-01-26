@@ -27,7 +27,7 @@ class MoscowStockDataApi implements StockDataApi
                 'from' => $date,
             ])->throw()->json('candles.data');
         });
-        dd($result);
+
         return $result;
     }
 }

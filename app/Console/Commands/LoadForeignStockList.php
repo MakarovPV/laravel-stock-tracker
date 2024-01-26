@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Api\Stock\Foreign\FinageStock;
+use App\Http\Controllers\ForeignStockController;
 use Illuminate\Console\Command;
 
 class LoadForeignStockList extends Command
@@ -11,7 +13,7 @@ class LoadForeignStockList extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'load:foreign_stock';
 
     /**
      * The console command description.
@@ -25,8 +27,9 @@ class LoadForeignStockList extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(FinageStock $finageStock, ForeignStockController $foreignStockController)
     {
-        return Command::SUCCESS;
+        $foreignStockController->store($finageStock->getStockListFromApi());
+        echo 'foreign succcess';
     }
 }

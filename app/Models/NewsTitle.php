@@ -10,6 +10,8 @@ class NewsTitle extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['id', 'title', 'published_at'];
+
     public function title(): HasOne
     {
         return $this->hasOne(News::class, 'title_id');

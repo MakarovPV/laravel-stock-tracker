@@ -2,16 +2,17 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ApiKey;
 use Illuminate\Console\Command;
 
-class LoadNews extends Command
+class loadApiKeysFromConfig extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'load:news';
+    protected $signature = 'load:api_keys';
 
     /**
      * The console command description.
@@ -27,6 +28,9 @@ class LoadNews extends Command
      */
     public function handle()
     {
-        return Command::SUCCESS;
+        $collection = collect(config('apikeys'))->flatten(1);
+        $collection->each(function ($item) {
+            ApiKey::insertOrIgnore($item);
+        });
     }
 }

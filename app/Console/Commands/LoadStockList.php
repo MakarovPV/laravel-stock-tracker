@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class LoadStockList extends Command
 {
@@ -11,7 +12,7 @@ class LoadStockList extends Command
      *
      * @var string
      */
-    protected $signature = 'stocks:load';
+    protected $signature = 'load:stock_list';
 
     /**
      * The console command description.
@@ -27,6 +28,8 @@ class LoadStockList extends Command
      */
     public function handle()
     {
-        return Command::SUCCESS;
+        Artisan::call('load:moscow_stock');
+        Artisan::call('load:foreign_stock');
+        echo 'success';
     }
 }

@@ -20,5 +20,6 @@ Route::group(['middleware' => 'auth.check'], function(){
 
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index']);
 
+
 Auth::routes();
 

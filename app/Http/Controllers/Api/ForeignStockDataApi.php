@@ -28,10 +28,20 @@ class ForeignStockDataApi implements StockDataApi
                 'symbol' => $data['ticker'],
                 'market' => 'usd',
                 'interval' => $data['interval'] . 'min',
-                'apikey' => $this->apikey,
+                'apiKey' => $this->apikey,
             ])->throw()->json();
         });
 
         return $result;
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->apikey;
+    }
+
+    public function setApiKey(string $apiKey)
+    {
+        $this->apikey = $apiKey;
     }
 }

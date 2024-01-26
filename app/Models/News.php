@@ -10,6 +10,8 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title_id', 'body', 'published_at'];
+
     public function title(): BelongsTo
     {
         return $this->BelongsTo(NewsTitle::class, 'title_id');

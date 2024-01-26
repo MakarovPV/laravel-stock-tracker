@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MonitoredStockRequest;
 use App\Models\MonitoredStock;
+use App\Repositories\MonitoredStockRepository;
 use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
 {
+    private MonitoredStockRepository $monitoredStockRepository;
+
+    public function __construct(MonitoredStockRepository $monitoredStockRepository)
+    {
+        $this->monitoredStockRepository = $monitoredStockRepository;
+    }
+
     public function index()
     {
-        $stocks_moscow = MonitoredStock::where('stock_exchange', 'moscow')->where('user_id', Auth::id())->toBase()->get();
-        $stocks_foreign = MonitoredStock::where('stock_exchange', 'foreign')->where('user_id', Auth::id())->toBase()->get();
-        $crypto = MonitoredStock::where('stock_exchange', 'crypto')->where('user_id', Auth::id())->toBase()->get();
+        $stocks_moscow = $this->monitoredStockRepository->getStockListBySource('moscow');
+        $stocks_foreign = $this->monitoredStockRepository->getStockListBySource('foreign');
+        $crypto = $this->monitoredStockRepository->getStockListBySource('crypto');
+
         return view('index', compact(['stocks_moscow', 'stocks_foreign', 'crypto']));
     }
 

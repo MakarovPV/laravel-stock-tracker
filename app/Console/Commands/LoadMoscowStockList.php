@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\MoscowStockController;
 use Illuminate\Console\Command;
 
 class LoadMoscowStockList extends Command
@@ -11,7 +12,7 @@ class LoadMoscowStockList extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'load:moscow_stock';
 
     /**
      * The console command description.
@@ -25,8 +26,8 @@ class LoadMoscowStockList extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(MoscowStockController $moscowStockController)
     {
-        return Command::SUCCESS;
+        $moscowStockController->store($moscowStockController->getStockArrayFromApi());
     }
 }

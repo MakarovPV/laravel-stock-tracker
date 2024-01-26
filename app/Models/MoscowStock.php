@@ -10,6 +10,8 @@ class MoscowStock extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['id', 'ticker', 'stock_name'];
+
     public function indices(): BelongsToMany
     {
         return $this->belongsToMany(MoscowIndex::class, 'moscow_stocks_indices');
