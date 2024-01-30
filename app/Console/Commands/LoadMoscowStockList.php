@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
 use App\Http\Controllers\MoscowStockController;
 use Illuminate\Console\Command;
 
@@ -26,8 +27,11 @@ class LoadMoscowStockList extends Command
      *
      * @return int
      */
-    public function handle(MoscowStockController $moscowStockController)
+    public function handle(ImoexStock $imoexStock, MoscowStockController $moscowStockController)
     {
-        $moscowStockController->store($moscowStockController->getStockArrayFromApi());
+        foreach ($imoexStock->getIndicesListFromApi() as $index){
+            $moscowStockController->store($imoexStock->getStockListFromApiByIndex($index['index_name']));
+        }
+        echo 'Список акций московской биржи загружен' . PHP_EOL;
     }
 }

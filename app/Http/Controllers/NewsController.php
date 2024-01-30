@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+
+use App\Helpers\Api\News\Stock\Moscow\ImoexStockNews;
+use App\Models\News;
+use App\Models\NewsTitle;
 
 class NewsController extends Controller
 {
     public function index()
     {
-        $array = Http::get("https://www.alphavantage.co/query", [
-            'function' => 'LISTING_STATUS',
-            'apiKey' => 'GQ12XD7I4I34URYY',
-        ]);
-        $rows = explode("\n", $array);
-        $result = array_map(function ($item) {
-            $array = explode(',', $item);
-            if (count($array) >= 2) {
-                $item = ['ticker' => $array[0], 'stock_name' => $array[1]];
-            }
-            return $item;
-        }, $rows);
+        return view('news');
+    }
 
-        dd($result);
-   }
+    public function store(NewsTitle $newsTitle)
+    {
+        $id = NewsTitle::latest('published_at')->first()->id;
+        $body = new ImoexStockNews();
+        News::insertOrIgnore([
+            'title_id' => $id,
+            'body' => $body->getNewsByTitleId($id),
+            'published_at' => $newsTitle->published_at,
+        ]);
+    }
 }

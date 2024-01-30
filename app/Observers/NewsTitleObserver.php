@@ -2,10 +2,16 @@
 
 namespace App\Observers;
 
+use App\Http\Controllers\NewsController;
 use App\Models\NewsTitle;
 
 class NewsTitleObserver
 {
+    private NewsController $newsController;
+    public function __construct(NewsController $newsController)
+    {
+        $this->newsController = $newsController;
+    }
     /**
      * Handle the NewsTitle "created" event.
      *
@@ -14,7 +20,7 @@ class NewsTitleObserver
      */
     public function created(NewsTitle $newsTitle)
     {
-        //
+        $this->newsController->store($newsTitle);
     }
 
     /**

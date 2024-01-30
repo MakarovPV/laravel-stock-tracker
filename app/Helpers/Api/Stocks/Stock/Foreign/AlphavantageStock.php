@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Api\Stock\Foreign;
+namespace App\Helpers\Api\Stocks\Stock\Foreign;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;

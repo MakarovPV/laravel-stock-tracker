@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('title_id');
-            $table->string('body');
+            $table->unsignedBigInteger('title_id')->nullable();
+            $table->text('body');
             $table->dateTime('published_at');
 
             $table->foreign('title_id')->references('id')->on('news_titles');

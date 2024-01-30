@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class NewsTitle extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $fillable = ['id', 'title', 'published_at'];
 
-    public function title(): HasOne
+    public function news(): HasOne
     {
         return $this->hasOne(News::class, 'title_id');
     }

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Helpers\Api\Stock\Foreign\FinageStock;
+use App\Helpers\Api\Stocks\Stock\Foreign\FinageStock;
 use App\Http\Controllers\ForeignStockController;
 use Illuminate\Console\Command;
 
@@ -30,6 +30,7 @@ class LoadForeignStockList extends Command
     public function handle(FinageStock $finageStock, ForeignStockController $foreignStockController)
     {
         $foreignStockController->store($finageStock->getStockListFromApi());
-        echo 'foreign succcess';
+
+        echo 'Список зарубежных акций загружен' . PHP_EOL;
     }
 }

@@ -2,15 +2,18 @@
 
 namespace App\Helpers\Api;
 
-use App\Repositories\ApiKeyRepository;
 use function config;
 
 abstract class ApiData
 {
     protected string $siteUrl = '';
-    protected string $apiKey = '';
 
-    public function __construct(ApiKeyRepository $apiKeyRepository)
+    public function __construct()
+    {
+        $this->setUrl();
+    }
+
+    private function setUrl()
     {
         $className = basename(get_class($this));
         $getType = strtolower(substr($className, -5));
@@ -18,9 +21,10 @@ abstract class ApiData
         $parentClassName = strtolower(substr(basename(get_parent_class($this)), 0, -4));
 
         $this->siteUrl = config('apikeys.'. $getType . '.' . $parentClassName . '.' . $currentClassName . '.site_url');
-
-        $this->apiKey = $apiKeyRepository->getApiKeyByUrl($this->siteUrl);
-
     }
 
+    public function getUrl()
+    {
+        return $this->siteUrl;
+    }
 }

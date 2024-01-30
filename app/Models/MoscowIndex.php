@@ -12,10 +12,10 @@ class MoscowIndex extends Model
 
     protected $table = 'moscow_indices';
 
-    protected $fillable = ['id', 'index_name', 'short_name'];
+    protected $fillable = ['index_name', 'short_name'];
 
-    public function indices(): BelongsToMany
+    public function stocks(): BelongsToMany
     {
-        return $this->belongsToMany(MoscowStock::class, 'moscow_stocks_indices');
+        return $this->belongsToMany(MoscowStock::class, 'moscow_stocks_indices', 'index_id', 'stock_id');
     }
 }
