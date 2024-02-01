@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('foreign_news', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('title_id')->nullable();
+            $table->string('title')->unique();
             $table->text('body');
             $table->dateTime('published_at');
-
-            $table->foreign('title_id')->references('id')->on('news_titles');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('foreign_news');
     }
 };

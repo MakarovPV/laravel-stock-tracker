@@ -11,20 +11,22 @@ class ImoexStockNews extends MoscowNews
         parent::__construct('https://iss.moex.com/');
     }
 
-    public function getNewsTitlesList()
+    public function getNewsList()
     {
         $result = [];
         $array = Http::get($this->siteUrl . "iss/sitenews.json", [
-                'iss.meta' => 'off',
-                'sitenews.columns' => 'id, title, published_at',
-                'iss.only' => 'sitenews'
-            ])['sitenews'];
+            'iss.meta' => 'off',
+            'sitenews.columns' => 'id, title, published_at',
+            'iss.only' => 'sitenews'
+        ])['sitenews'];
+        $array['columns'][] = 'body';
 
         foreach ($array['data'] as $val){
+            $val[] = $this->getNewsByTitleId($val[0]);
             $result[] = array_combine($array['columns'], $val);
         }
 
-        return array_reverse($result);
+        return $result;
     }
 
     public function getNewsByTitleId(int $title_id)
@@ -35,6 +37,8 @@ class ImoexStockNews extends MoscowNews
             'iss.only' => 'content'
         ])['content']['data'][0][0];
 
-        return $result;
+        return trim(strip_tags($result));
     }
+
+
 }

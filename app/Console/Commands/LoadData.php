@@ -32,6 +32,6 @@ class LoadData extends Command
         Artisan::call('load:moscow_data');
         Artisan::call('load:foreign_data');
 
-        echo 'Все данные загружены';
+        echo 'Все данные загружены.';
     }
 }

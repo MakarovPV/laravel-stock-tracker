@@ -15,7 +15,14 @@ return [
                 'api_key' => 'API_KEY37AAADLPB644GJYMQNP5SXY5OX3118PG',
                 'requests_limit' => 1000,
                 'limit_interval' => 'month'
-            ]
+            ],
+
+            'financialmodelingprep' => [
+                'site_url' => 'https://financialmodelingprep.com/',
+                'api_key' => 'APQn16F494zqV6cL42eM7DfLGLiOSIRJ',
+                'requests_limit' => 250,
+                'limit_interval' => 'day'
+            ],
         ],
         'moscow' => [
             'imoex' => [

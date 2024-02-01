@@ -7,5 +7,5 @@ use App\Helpers\Api\Traits\HasApiKey;
 
 abstract class ForeignData extends StockData
 {
-    use HasApiKey;
+
 }

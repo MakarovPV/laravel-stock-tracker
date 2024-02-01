@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('foreign_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('ticker');
+            $table->string('ticker')->unique();
             $table->string('stock_name');
         });
     }

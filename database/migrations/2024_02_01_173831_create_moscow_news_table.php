@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('news_titles', function (Blueprint $table) {
+        Schema::create('moscow_news', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->unique();
-
             $table->string('title');
+            $table->text('body');
             $table->dateTime('published_at');
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news_titles');
+        Schema::dropIfExists('moscow_news');
     }
 };

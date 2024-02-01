@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Foreign\Stock;
 
 use App\Helpers\Api\Stocks\Stock\Foreign\FinageStock;
 use App\Http\Controllers\ForeignStockController;
@@ -31,6 +31,6 @@ class LoadForeignStockList extends Command
     {
         $foreignStockController->store($finageStock->getStockListFromApi());
 
-        echo 'Список зарубежных акций загружен' . PHP_EOL;
+        echo 'Список зарубежных акций загружен.' . PHP_EOL;
     }
 }

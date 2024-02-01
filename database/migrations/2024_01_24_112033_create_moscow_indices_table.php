@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('moscow_indices', function (Blueprint $table) {
             $table->id();
-            $table->string('index_name');
+            $table->string('index_name')->unique();
             $table->string('short_name');
         });
     }

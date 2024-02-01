@@ -2,12 +2,10 @@
 
 namespace App\Helpers\Api\News\Crypt;
 
-use App\Helpers\Api\Stocks\Crypt\CryptocompareCrypt;
-
 class CryptocompareCryptNews extends CryptNews
 {
-    public function __construct(CryptocompareCrypt $stockData)
+    public function __construct(string $siteUrl)
     {
-        parent::__construct($stockData);
+        parent::__construct($siteUrl);
     }
 }

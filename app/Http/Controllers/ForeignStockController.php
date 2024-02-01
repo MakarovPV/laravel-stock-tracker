@@ -6,7 +6,6 @@ use App\Models\ForeignStock;
 
 class ForeignStockController extends Controller
 {
-
     public function store(array $array)
     {
         ForeignStock::insertOrIgnore($array);

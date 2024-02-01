@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->default('0');
 
             $table->string('stock_name');
-            $table->string('stock_ticker_symbol');
+            $table->string('stock_ticker_symbol')->unique();
             $table->string('stock_exchange');
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Foreign;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class LoadMoscowData extends Command
+class LoadForeignData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'load:moscow_data';
+    protected $signature = 'load:foreign_data';
 
     /**
      * The console command description.
@@ -28,12 +28,10 @@ class LoadMoscowData extends Command
      */
     public function handle()
     {
-        Artisan::call('load:moscow_stock');
-        Artisan::call('load:moscow_indices');
-        Artisan::call('load:moscow_stock_indices');
+        Artisan::call('load:foreign_stock');
 
-        Artisan::call('load:moscow_news');
+        Artisan::call('load:foreign_news');
 
-        echo 'Данные московской биржи загружены' . PHP_EOL;
+        echo 'Данные по зарубежным активам загружены.' . PHP_EOL;
     }
 }

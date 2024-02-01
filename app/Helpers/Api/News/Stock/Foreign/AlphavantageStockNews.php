@@ -2,12 +2,11 @@
 
 namespace App\Helpers\Api\News\Stock\Foreign;
 
-use App\Helpers\Api\Stocks\Stock\Foreign\AlphavantageStock;
 
 class AlphavantageStockNews extends ForeignNews
 {
-    public function __construct(AlphavantageStock $stockData)
+    public function __construct(string $siteUrl)
     {
-        parent::__construct($stockData);
+        parent::__construct($siteUrl);
     }
 }

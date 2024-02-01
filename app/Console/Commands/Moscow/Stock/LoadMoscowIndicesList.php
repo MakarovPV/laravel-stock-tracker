@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moscow\Stock;
 
 use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
 use App\Http\Controllers\MoscowIndexController;
@@ -31,6 +31,6 @@ class LoadMoscowIndicesList extends Command
     {
         $moscowIndexController->store($imoexStock->getIndicesListFromApi());
 
-        echo 'Список индексов московской биржи загружен' . PHP_EOL;
+        echo 'Список индексов московской биржи загружен.' . PHP_EOL;
     }
 }

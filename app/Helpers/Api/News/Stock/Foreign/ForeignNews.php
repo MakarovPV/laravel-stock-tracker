@@ -3,15 +3,11 @@
 namespace App\Helpers\Api\News\Stock\Foreign;
 
 use App\Helpers\Api\News\NewsData;
-use App\Helpers\Api\Stocks\StockData;
-use App\Helpers\Api\Traits\HasApiKey;
 
 abstract class ForeignNews extends NewsData
 {
-    use HasApiKey;
-
-    public function __construct(StockData $stockData)
+    public function __construct(string $siteUrl)
     {
-        parent::__construct($stockData);
+        parent::__construct($siteUrl);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moscow\News;
 
 use App\Helpers\Api\News\Stock\Moscow\ImoexStockNews;
-use App\Http\Controllers\NewsTitleController;
+use App\Http\Controllers\MoscowNewsController;
 use Illuminate\Console\Command;
 
 class LoadMoscowNews extends Command
@@ -27,10 +27,10 @@ class LoadMoscowNews extends Command
      *
      * @return int
      */
-    public function handle(NewsTitleController $newsTitleController, ImoexStockNews $imoexStockNews)
+    public function handle(MoscowNewsController $moscowNewsController, ImoexStockNews $imoexStockNews)
     {
-        $newsTitleController->store($imoexStockNews->getNewsTitlesList());
+        $moscowNewsController->store($imoexStockNews->getNewsList());
 
-        echo 'Список новостей московской биржи загружен' . PHP_EOL;
+        echo 'Список новостей московской биржи загружен.' . PHP_EOL;
     }
 }
