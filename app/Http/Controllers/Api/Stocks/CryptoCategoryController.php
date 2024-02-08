@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 class CryptoCategoryController extends StockDataApiController
 {
-    public function __construct(CryptocompareCrypt $apiData)
+    private CryptocompareCrypt $cryptocompareCrypt;
+
+    public function __construct(CryptocompareCrypt $cryptocompareCrypt)
     {
-        parent::__construct($apiData);
+        $this->cryptocompareCrypt = $cryptocompareCrypt;
     }
 
     /** Получение данных по API криптовалюты.
@@ -19,6 +21,6 @@ class CryptoCategoryController extends StockDataApiController
     public function getData(Request $request) : mixed
     {
         $data = $request->query();
-        return $this->apiData->getTickerDataFromApi($data);
+        return $this->cryptocompareCrypt->getTickerDataFromApi($data);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Foreign\News;
 
+use App\Helpers\Api\News\Stock\Foreign\FinageStockNews;
 use App\Helpers\Api\News\Stock\Foreign\FinancialmodelingprepStockNews;
 use App\Http\Controllers\ForeignNewsController;
 use Illuminate\Console\Command;

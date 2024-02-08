@@ -3,7 +3,11 @@
 namespace App\Console\Commands\Foreign\Stock;
 
 use App\Helpers\Api\Stocks\Stock\Foreign\FinageStock;
+use App\Helpers\Api\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use App\Http\Controllers\ForeignStockController;
+use App\Models\ForeignStockInfo;
+use App\Repositories\ForeignStockInfoRepository;
+use App\Repositories\ForeignStockRepository;
 use Illuminate\Console\Command;
 
 class LoadForeignStockList extends Command
@@ -27,9 +31,9 @@ class LoadForeignStockList extends Command
      *
      * @return int
      */
-    public function handle(FinageStock $finageStock, ForeignStockController $foreignStockController)
+    public function handle(ForeignStockController $foreignStockController, FinancialmodelingprepStock $financialmodelingprepStock)
     {
-        $foreignStockController->store($finageStock->getStockListFromApi());
+        $foreignStockController->store($financialmodelingprepStock->getStockList());
 
         echo 'Список зарубежных акций загружен.' . PHP_EOL;
     }

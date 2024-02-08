@@ -9,5 +9,5 @@ class ForeignStock extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'ticker', 'stock_name'];
+    protected $fillable = ['ticker', 'stock_name', 'sector'];
 }

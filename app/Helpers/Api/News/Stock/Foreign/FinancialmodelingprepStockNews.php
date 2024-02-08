@@ -14,7 +14,7 @@ class FinancialmodelingprepStockNews extends ForeignNews
     public function getNewsList()
     {
         $result = [];
-        $array = Http::get($this->siteUrl . "api/v3/fmp/articles?page=0&size=50&apikey=APQn16F494zqV6cL42eM7DfLGLiOSIRJ", [
+        $array = Http::get($this->siteUrl . "api/v3/fmp/articles", [
             'page' => '0',
             'size' => '50',
             'apikey' => $this->apiKey,

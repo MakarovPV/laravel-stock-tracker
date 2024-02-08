@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Api\Stocks;
 
 use App\Helpers\Api\Stocks\Stock\Foreign\AlphavantageStock;
+use App\Helpers\Api\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use Illuminate\Http\Request;
 
 class ForeignStockCategoryController extends StockDataApiController
 {
-    public function __construct(AlphavantageStock $apiData)
+    private AlphavantageStock $alphavantageStock;
+    private FinancialmodelingprepStock $financialmodelingprepStock;
+
+    public function __construct()
     {
-        parent::__construct($apiData);
+        $this->alphavantageStock = new AlphavantageStock();
+        $this->financialmodelingprepStock = new FinancialmodelingprepStock();
     }
 
     /** Получение данных по API иностранной биржи.
@@ -19,6 +24,14 @@ class ForeignStockCategoryController extends StockDataApiController
     public function getData(Request $request) : mixed
     {
         $data = $request->query();
-        return $this->apiData->getTickerDataFromApi($data);
+        return $this->alphavantageStock->getTickerDataFromApi($data);
+    }
+
+    public function getStockInfo(int $stock_id, string $ticker)
+    {
+        $stockInfo = $this->financialmodelingprepStock->getStockInfoByTicker($ticker);
+        $stockInfo['stock_id'] = $stock_id;
+
+        return $stockInfo;
     }
 }

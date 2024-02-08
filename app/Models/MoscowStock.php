@@ -11,7 +11,7 @@ class MoscowStock extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['id', 'ticker', 'stock_name'];
+    protected $fillable = ['ticker', 'stock_name'];
 
     public function indices(): BelongsToMany
     {

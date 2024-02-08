@@ -70,4 +70,16 @@ function send(stock_name, stock_ticker)
      })
 }
 
+$('#app').on('change', '#stocks :first-child :first-child', function (e){
+    const source = $(this).parent().attr('id');
+    const sector = $(this).val();
+    $.ajax({
+        url: `/stocks/${source}?sector=${sector}`,
+        method: 'GET',
+        success: function(response) {
+            $('#app').empty();
+            $('#app').html(response);
+        }
+    });
+});
 

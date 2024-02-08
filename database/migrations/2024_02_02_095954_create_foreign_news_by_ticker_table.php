@@ -13,11 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('foreign_stocks', function (Blueprint $table) {
+        Schema::create('foreign_news_by_ticker', function (Blueprint $table) {
             $table->id();
-            $table->string('ticker')->unique();
-            $table->string('stock_name');
-            $table->string('sector');
+            $table->unsignedBigInteger('stock_id');
+
+            $table->string('title')->unique();
+            $table->string('description');
+            $table->string('url');
+            $table->dateTime('date');
+
+            $table->foreign('stock_id')->references('id')->on('foreign_stocks');
         });
     }
 
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foreign_stocks');
+        Schema::dropIfExists('foreign_news_by_ticker');
     }
 };

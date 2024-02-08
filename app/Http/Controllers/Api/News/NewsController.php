@@ -7,8 +7,5 @@ use App\Http\Controllers\Api\ApiController;
 
 class NewsController extends ApiController
 {
-    public function __construct(ApiData $apiData)
-    {
-        parent::__construct($apiData);
-    }
+
 }

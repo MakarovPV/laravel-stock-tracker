@@ -14,7 +14,7 @@ class MonitoredStockRepository extends Repository
 
     public function getStockListBySource(string $stock_exchange)
     {
-        return $this->model->where('stock_exchange', $stock_exchange)->where('user_id', Auth::id())->toBase()->get();
+        return $this->model->where('stock_exchange', $stock_exchange)->where('user_id', Auth::id())->get();
     }
 
 }

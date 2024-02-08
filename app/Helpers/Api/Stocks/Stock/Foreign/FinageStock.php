@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class FinageStock extends ForeignData
 {
-    public function getStockListFromApi(): array
+    public function getStockList(): array
     {
         $result = [];
         $array = Http::get($this->siteUrl . "market-information/us/most-actives", [
