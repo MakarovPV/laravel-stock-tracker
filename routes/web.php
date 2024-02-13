@@ -18,16 +18,32 @@ Route::group(['middleware' => 'auth.check'], function(){
     Route::post('/', [App\Http\Controllers\StockController::class, 'store']);
 });
 
-Route::get('/news/moscow', [\App\Http\Controllers\MoscowNewsController::class, 'index']);
-Route::get('/news/moscow/{id}', [\App\Http\Controllers\MoscowNewsController::class, 'show'])->name('news.moscow.show');
+Route::group(['prefix' => 'news'], function () {
 
-Route::get('/news/foreign', [\App\Http\Controllers\ForeignNewsController::class, 'index']);
-Route::get('/news/foreign/{id}', [\App\Http\Controllers\ForeignNewsController::class, 'show'])->name('news.foreign.show');
+    Route::group(['prefix' => 'moscow'], function () {
+        Route::get('/', [\App\Http\Controllers\MoscowNewsController::class, 'index']);
+        Route::get('/{id}', [\App\Http\Controllers\MoscowNewsController::class, 'show'])->name('news.moscow.show');
+    });
 
-Route::get('/stocks/moscow', [\App\Http\Controllers\MoscowStockController::class, 'index'])->name('stocks.moscow.index');
+    Route::group(['prefix' => 'foreign'], function () {
+        Route::get('/', [\App\Http\Controllers\ForeignNewsController::class, 'index']);
+        Route::get('/{id}', [\App\Http\Controllers\ForeignNewsController::class, 'show'])->name('news.foreign.show');
+    });
 
-Route::get('/stocks/foreign', [\App\Http\Controllers\ForeignStockController::class, 'index'])->name('stocks.foreign.index');
-Route::get('/stocks/foreign/{id}', [\App\Http\Controllers\ForeignStockController::class, 'show'])->name('stocks.foreign.show');
+});
+
+Route::group(['prefix' => 'stocks'], function () {
+
+    Route::group(['prefix' => 'moscow'], function () {
+        Route::get('/', [\App\Http\Controllers\MoscowStockController::class, 'index'])->name('stocks.moscow.index');
+    });
+
+    Route::group(['prefix' => 'foreign'], function () {
+        Route::get('/', [\App\Http\Controllers\ForeignStockController::class, 'index'])->name('stocks.foreign.index');
+        Route::get('/{id}', [\App\Http\Controllers\ForeignStockController::class, 'show'])->name('stocks.foreign.show');
+    });
+
+});
 
 Auth::routes();
 

@@ -14,11 +14,13 @@ class CryptoCategoryController extends StockDataApiController
         $this->cryptocompareCrypt = $cryptocompareCrypt;
     }
 
-    /** Получение данных по API криптовалюты.
+    /**
+     * Получение данных по API криптовалюты.
+     *
      * @param Request $request
      * @return mixed
      */
-    public function getData(Request $request) : mixed
+    public function getData(Request $request): mixed
     {
         $data = $request->query();
         return $this->cryptocompareCrypt->getTickerDataFromApi($data);

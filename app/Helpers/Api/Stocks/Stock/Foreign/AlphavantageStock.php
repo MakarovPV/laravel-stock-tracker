@@ -7,7 +7,13 @@ use Illuminate\Support\Facades\Http;
 
 class AlphavantageStock extends ForeignData
 {
-    public function getTickerDataFromApi(array $data) : mixed
+    /**
+     * Получение данных по стоимости акции за указанный период.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function getTickerDataFromApi(array $data): mixed
     {
         $cacheKey = $data['ticker'] . '_' . $data['interval'];
 
@@ -17,7 +23,7 @@ class AlphavantageStock extends ForeignData
                 'symbol' => $data['ticker'],
                 'market' => 'usd',
                 'interval' => $data['interval'] . 'min',
-                'apiKey' => $this->apiKey,
+                'apikey' => $this->apiKey,
             ])->throw()->json();
         });
 

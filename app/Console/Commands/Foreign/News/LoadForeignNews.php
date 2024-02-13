@@ -21,7 +21,7 @@ class LoadForeignNews extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка последних новостей по зарубежным акциям';
 
     /**
      * Execute the console command.
@@ -31,7 +31,6 @@ class LoadForeignNews extends Command
     public function handle(ForeignNewsController $foreignNewsController, FinancialmodelingprepStockNews $financialmodelingprepStockNews)
     {
         $foreignNewsController->store($financialmodelingprepStockNews->getNewsList());
-
         echo 'Список новостей по иностранным активам загружен.' . PHP_EOL;
     }
 }

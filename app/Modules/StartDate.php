@@ -2,7 +2,12 @@
 
 namespace App\Modules;
 
-abstract class StartDate
+interface StartDate
 {
-    abstract public function getStartDate() : string;
+    /**
+     * Получение даты, которая будет являться стартовой точкой временного интервала при получении данных по api.
+     *
+     * @return string
+     */
+    public function getStartDate(): string;
 }

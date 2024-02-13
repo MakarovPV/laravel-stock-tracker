@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Http;
 
 class FinancialmodelingprepStock extends ForeignData
 {
+    /**
+     * Получение списка зарубежных акций.
+     *
+     * @return array
+     */
     public function getStockList(): array
     {
         $result = [];
@@ -24,6 +29,12 @@ class FinancialmodelingprepStock extends ForeignData
         return $result;
     }
 
+    /**
+     * Получение полной информации по конкретной акции.
+     *
+     * @param string $ticker
+     * @return array
+     */
     public function getStockInfoByTicker(string $ticker): array
     {
         $result = [];

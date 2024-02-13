@@ -19,7 +19,7 @@ class LoadMoscowData extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка данных по российскому рынку';
 
     /**
      * Execute the console command.

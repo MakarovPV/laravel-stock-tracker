@@ -19,7 +19,7 @@ class LoadData extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка всех данных';
 
     /**
      * Execute the console command.

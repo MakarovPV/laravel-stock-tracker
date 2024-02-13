@@ -18,6 +18,12 @@ class ForeignStockController extends Controller
         $this->foreignStockInfoRepository = $foreignStockInfoRepository;
     }
 
+    /**
+     * Получение и вывод списка зарубежных акций на страницу по сектору.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(Request $request)
     {
         $data = $request->all();
@@ -28,6 +34,12 @@ class ForeignStockController extends Controller
         return view('stocks.foreign.index', compact('stocks', 'sectors'));
     }
 
+    /**
+     * Вывод информации по конкретной акции.
+     *
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show(int $id)
     {
         $info = $this->foreignStockInfoRepository->getInfo($id);
@@ -35,7 +47,11 @@ class ForeignStockController extends Controller
         return view('stocks.foreign.show', compact('info'));
     }
 
-    public function store(array $array)
+    /**
+     * @param array $array
+     * @return void
+     */
+    public function store(array $array): void
     {
         ForeignStock::insertOrIgnore($array);
     }

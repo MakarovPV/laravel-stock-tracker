@@ -2,16 +2,21 @@
 
 namespace App\Modules;
 
-class StartDateSetting
+class StartDateFactory
 {
     private string $time_interval;
 
-    public function __construct($time_interval)
+    public function __construct(string $time_interval)
     {
         $this->time_interval = $time_interval;
     }
 
-    public function selectInterval() : string
+    /**
+     * Получение стартовой даты в зависимости от переданного интервала.
+     *
+     * @return string
+     */
+    public function selectInterval(): string
     {
         switch ($this->time_interval) {
             case 'day': return (new StartDateLastDay())->getStartDate();

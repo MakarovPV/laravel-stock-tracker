@@ -18,6 +18,14 @@ class MoscowStockController extends Controller
         $this->moscowIndexRepository = $moscowIndexRepository;
     }
 
+    /**
+     * Получение и вывод списка российских акций на страницу по сектору.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function index(Request $request)
     {
         $data = $request->all();
@@ -28,7 +36,11 @@ class MoscowStockController extends Controller
         return view('stocks.moscow.index', compact('stocks', 'indices'));
     }
 
-    public function store(array $array)
+    /**
+     * @param array $array
+     * @return void
+     */
+    public function store(array $array): void
     {
         MoscowStock::insertOrIgnore($array);
     }

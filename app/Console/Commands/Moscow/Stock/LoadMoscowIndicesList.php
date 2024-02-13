@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Moscow\Stock;
 
 use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
-use App\Http\Controllers\MoscowIndexController;
+use App\Models\MoscowIndex;
 use Illuminate\Console\Command;
 
 class LoadMoscowIndicesList extends Command
@@ -20,16 +20,16 @@ class LoadMoscowIndicesList extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка списка российских индексов';
 
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle(ImoexStock $imoexStock, MoscowIndexController $moscowIndexController)
+    public function handle(ImoexStock $imoexStock)
     {
-        $moscowIndexController->store($imoexStock->getIndicesListFromApi());
+        MoscowIndex::insertOrIgnore($imoexStock->getIndicesListFromApi());
 
         echo 'Список индексов московской биржи загружен.' . PHP_EOL;
     }

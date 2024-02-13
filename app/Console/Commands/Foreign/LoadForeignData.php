@@ -19,7 +19,7 @@ class LoadForeignData extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка данных по зарубежному рынку';
 
     /**
      * Execute the console command.

@@ -16,17 +16,19 @@ abstract class ApiData
         $this->setApiKey();
     }
 
-    private function setUrl()
-    {
-        $className = basename(get_class($this));
-        $getType = strtolower(substr($className, -5));
-        $currentClassName = strtolower(substr($className, 0, -5));
-        $parentClassName = strtolower(substr(basename(get_parent_class($this)), 0, -4));
+    /**
+     * Получение и запись в переменную url для текущего класса.
+     *
+     * @return mixed
+     */
+    protected abstract function setUrl(): void;
 
-        $this->siteUrl = config('apikeys.'. $getType . '.' . $parentClassName . '.' . $currentClassName . '.site_url');
-    }
-
-    private function setApiKey()
+    /**
+     * Получение и запись в переменную api-ключа из конфиг-файла по url.
+     *
+     * @return void
+     */
+    private function setApiKey(): void
     {
         $apiKeyRepository = new ApiKeyRepository();
         $this->apiKey = $apiKeyRepository->getApiKeyByUrl($this->siteUrl);

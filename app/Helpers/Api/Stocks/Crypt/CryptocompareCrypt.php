@@ -7,7 +7,13 @@ use Illuminate\Support\Facades\Http;
 
 class CryptocompareCrypt extends CryptData
 {
-    public function getTickerDataFromApi(array $data) : mixed
+    /**
+     * Получение данных по стоимости криптовалюты за указанный период.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function getTickerDataFromApi(array $data): mixed
     {
         $cacheKey = $data['ticker'] . '_' . $data['interval'];
 

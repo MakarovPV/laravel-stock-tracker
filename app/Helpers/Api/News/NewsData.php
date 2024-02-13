@@ -2,23 +2,17 @@
 
 namespace App\Helpers\Api\News;
 
+use App\Helpers\Api\ApiData;
 
-use App\Repositories\ApiKeyRepository;
-
-abstract class NewsData
+abstract class NewsData extends ApiData
 {
-    protected string $siteUrl = '';
-    protected string $apiKey = '';
-
-    public function __construct(string $siteUrl)
+    protected function setUrl(): void
     {
-        $this->siteUrl = $siteUrl;
-        $this->setApiKey();
-    }
+        $className = basename(get_class($this));
+        $getType = strtolower(substr(substr($className, -9), 0, -4));
+        $currentClassName = strtolower(substr($className, 0, -9));
+        $parentClassName = strtolower(substr(basename(get_parent_class($this)), 0, -4));
 
-    private function setApiKey()
-    {
-        $apiKeyRepository = new ApiKeyRepository();
-        $this->apiKey = $apiKeyRepository->getApiKeyByUrl($this->siteUrl);
+        $this->siteUrl = config('apikeys.'. $getType . '.' . $parentClassName . '.' . $currentClassName . '.site_url');
     }
 }

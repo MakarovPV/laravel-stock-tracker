@@ -11,7 +11,6 @@ class MoscowIndex extends Model
     use HasFactory;
 
     protected $table = 'moscow_indices';
-
     protected $fillable = ['index_name', 'short_name'];
 
     public function stocks(): BelongsToMany

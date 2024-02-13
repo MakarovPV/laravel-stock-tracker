@@ -20,7 +20,7 @@ class LoadMoscowStockList extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка списка российских акций';
 
     /**
      * Execute the console command.

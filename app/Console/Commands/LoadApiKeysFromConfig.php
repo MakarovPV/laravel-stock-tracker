@@ -19,7 +19,7 @@ class loadApiKeysFromConfig extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка api-ключей из конфига';
 
     /**
      * Execute the console command.

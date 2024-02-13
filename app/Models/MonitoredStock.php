@@ -10,6 +10,5 @@ class MonitoredStock extends Model
     use HasFactory;
 
     protected $table = 'monitored_stocks';
-
     protected $fillable = ['user_id', 'stock_name', 'stock_ticker_symbol', 'stock_exchange'];
 }

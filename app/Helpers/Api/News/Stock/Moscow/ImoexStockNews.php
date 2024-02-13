@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Http;
 
 class ImoexStockNews extends MoscowNews
 {
-    public function __construct()
-    {
-        parent::__construct('https://iss.moex.com/');
-    }
-
-    public function getNewsList()
+    /**
+     * Получение списка заголовков новостей рынка российских акций.
+     *
+     * @return array
+     */
+    public function getNewsList() : array
     {
         $result = [];
         $array = Http::get($this->siteUrl . "iss/sitenews.json", [
@@ -22,14 +22,20 @@ class ImoexStockNews extends MoscowNews
         $array['columns'][] = 'body';
 
         foreach ($array['data'] as $val){
-            $val[] = $this->getNewsByTitleId($val[0]);
+            $val[] = $this->getNewsBodyByTitleId($val[0]);
             $result[] = array_combine($array['columns'], $val);
         }
 
         return $result;
     }
 
-    public function getNewsByTitleId(int $title_id)
+    /**
+     * Получение содержимого конкретной новости по id её заголовка.
+     *
+     * @param int $title_id
+     * @return string
+     */
+    public function getNewsBodyByTitleId(int $title_id) : string
     {
         $result = Http::get($this->siteUrl . "iss/sitenews/{$title_id}.json", [
             'iss.meta' => 'off',

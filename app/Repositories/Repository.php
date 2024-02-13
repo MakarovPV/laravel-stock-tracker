@@ -12,11 +12,26 @@ abstract class Repository
 
     public function __construct()
     {
-        $this->model = app($this->model());
+        $this->model = app('App\Models\\' . $this->model());
     }
 
-    abstract protected function model(): string;
+    /**
+     * Получение имени модели для последующей работы с ней.
+     *
+     * @return string
+     */
+    private function model(): string
+    {
+        return basename(substr(get_class($this), 0, -10));
+    }
 
+    /**
+     * Пагинация для коллекции.
+     *
+     * @param Collection $data
+     * @param $perPage
+     * @return LengthAwarePaginator
+     */
     protected function paginate(Collection $data, $perPage = 25)
     {
         $currentPage = LengthAwarePaginator::resolveCurrentPage();

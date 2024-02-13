@@ -4,9 +4,9 @@ namespace App\Modules;
 
 use Carbon\Carbon;
 
-class StartDateLastDay extends StartDate
+class StartDateLastDay implements StartDate
 {
-    public function getStartDate() : string
+    public function getStartDate(): string
     {
         return Carbon::now()->subDay()->format('Y-m-d');
     }

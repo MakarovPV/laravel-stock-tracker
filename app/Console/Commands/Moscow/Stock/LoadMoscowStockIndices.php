@@ -3,9 +3,9 @@
 namespace App\Console\Commands\Moscow\Stock;
 
 use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
-use App\Http\Controllers\MoscowStockIndexController;
 use App\Models\MoscowIndex;
 use App\Models\MoscowStock;
+use App\Models\MoscowStockIndex;
 use Illuminate\Console\Command;
 
 class LoadMoscowStockIndices extends Command
@@ -22,14 +22,14 @@ class LoadMoscowStockIndices extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Заполнение промежуточной таблицы по российским акциям и индексам';
 
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle(ImoexStock $imoexStock, MoscowStockIndexController $moscowStockIndexController)
+    public function handle(ImoexStock $imoexStock)
     {
         $moscowStocks = MoscowStock::select('id', 'ticker')->pluck('id', 'ticker');
         foreach ($moscowStocks as $index => $stockId)
@@ -39,7 +39,7 @@ class LoadMoscowStockIndices extends Command
             {
                 $indexId = MoscowIndex::select('id')->where('index_name', $val)->pluck('id');
                 if(!isset($indexId[0])) continue;
-                $moscowStockIndexController->store(['stock_id' => $stockId, 'index_id' => $indexId[0]]);
+                MoscowStockIndex::insertOrIgnore(['stock_id' => $stockId, 'index_id' => $indexId[0]]);
             }
         }
     }

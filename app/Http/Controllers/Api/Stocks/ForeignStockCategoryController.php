@@ -17,17 +17,26 @@ class ForeignStockCategoryController extends StockDataApiController
         $this->financialmodelingprepStock = new FinancialmodelingprepStock();
     }
 
-    /** Получение данных по API иностранной биржи.
+    /**
+     * Получение данных по API иностранной биржи.
+     *
      * @param Request $request
      * @return mixed
      */
-    public function getData(Request $request) : mixed
+    public function getData(Request $request): mixed
     {
         $data = $request->query();
         return $this->alphavantageStock->getTickerDataFromApi($data);
     }
 
-    public function getStockInfo(int $stock_id, string $ticker)
+    /**
+     * Получение полной информации по конкретной акции.
+     *
+     * @param int $stock_id
+     * @param string $ticker
+     * @return array
+     */
+    public function getStockInfo(int $stock_id, string $ticker): array
     {
         $stockInfo = $this->financialmodelingprepStock->getStockInfoByTicker($ticker);
         $stockInfo['stock_id'] = $stock_id;

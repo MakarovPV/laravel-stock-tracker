@@ -2,16 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Models\MoscowStock;
-
 class MoscowStockRepository extends Repository
 {
-
-    protected function model(): string
-    {
-        return MoscowStock::class;
-    }
-
+    /**
+     * Получение списка акций по указанному индексу. В случае отсутствия первого аргумента выводит список всех акций.
+     *
+     * @param string $index
+     * @param $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
     public function getStockListByIndex(string $index = '', $perPage = 25)
     {
         if($index === '') return $this->model->simplePaginate($perPage);

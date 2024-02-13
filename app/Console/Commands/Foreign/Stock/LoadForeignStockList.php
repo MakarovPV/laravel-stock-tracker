@@ -24,7 +24,7 @@ class LoadForeignStockList extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка списка зарубежных акций';
 
     /**
      * Execute the console command.

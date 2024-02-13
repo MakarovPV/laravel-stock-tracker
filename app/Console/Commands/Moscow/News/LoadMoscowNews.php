@@ -20,7 +20,7 @@ class LoadMoscowNews extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Загрузка последних новостей по российским акциям';
 
     /**
      * Execute the console command.

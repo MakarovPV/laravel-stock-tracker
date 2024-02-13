@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 abstract class StockDataApiController extends ApiController
 {
-    /** Получение данных по API
+    /**
+     * Получение данных по API.
+     *
      * @param Request $request
      * @return mixed
      */
-    abstract public function getData(Request $request) : mixed;
+    abstract public function getData(Request $request): mixed;
 }

@@ -2,17 +2,26 @@
 
 namespace App\Repositories;
 
-use App\Models\ForeignStock;
-use Illuminate\Database\Eloquent\Builder;
-
 class ForeignStockRepository extends Repository
 {
-    protected function model(): string
+    /**
+     * Получение списка секторов.
+     *
+     * @return mixed
+     */
+    public function getSectors(): mixed
     {
-        return ForeignStock::class;
+        return $this->model->distinct()->pluck('sector')->filter();
     }
 
-    public function getStockListBySector(string $sector = '', int $perPage = 25)
+    /**
+     * Получение списка акций по указанному сектору. В случае отсутствия первого аргумента выводит список всех акций.
+     *
+     * @param string $sector
+     * @param int $perPage
+     * @return mixed
+     */
+    public function getStockListBySector(string $sector = '', int $perPage = 25): mixed
     {
         return $this->model->when($sector !== '' , function ($query) use ($sector) {
             $query->where('sector', $sector);
@@ -20,13 +29,14 @@ class ForeignStockRepository extends Repository
 
     }
 
-    public function getStockTickerById(int $id)
+    /**
+     * Получение тикера акции по указанному id.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getStockTickerById(int $id): mixed
     {
         return $this->model->select('ticker')->where('id', $id)->pluck('ticker')->first();
-    }
-
-    public function getSectors()
-    {
-        return $this->model->distinct()->pluck('sector')->filter();
     }
 }

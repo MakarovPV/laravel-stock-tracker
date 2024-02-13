@@ -2,17 +2,23 @@
 
 namespace App\Helpers\Api\Stocks\Stock\Moscow;
 
-use App\Modules\StartDateSetting;
+use App\Modules\StartDateFactory;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class ImoexStock extends MoscowData
 {
-    public function getTickerDataFromApi(array $data) : mixed
+    /**
+     * Получение данных по стоимости акции за указанный период.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function getTickerDataFromApi(array $data): mixed
     {
         $cacheKey = $data['ticker'] . '_' . $data['interval'];
 
-        $date = (new StartDateSetting($data['segment']))->selectInterval();
+        $date = (new StartDateFactory($data['segment']))->selectInterval();
 
         $result = Cache::remember($cacheKey, 3600, function () use ($data, $date){
             return Http::get($this->siteUrl . "iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json", [
@@ -25,25 +31,11 @@ class ImoexStock extends MoscowData
         return $result;
     }
 
-    public function getStockListFromApiByIndex(string $index = 'imoex'): array
-    {
-        $result = [];
-        $array = Http::get($this->siteUrl . "iss/statistics/engines/stock/markets/index/analytics/{$index}.json",
-            [
-                'limit' => '100',
-                'iss.meta' => 'off',
-                'analytics.columns' => 'ticker, shortnames',
-                'iss.only' => 'analytics'
-            ])['analytics'];
-        $array['columns'][1] = 'stock_name';
-
-        foreach ($array['data'] as $val){
-            $result[] = array_combine($array['columns'], $val);
-        }
-
-        return $result;
-    }
-
+    /**
+     * Получение списка существующих на московской бирже индексов.
+     *
+     * @return array
+     */
     public function getIndicesListFromApi(): array
     {
         $result = [];
@@ -64,6 +56,37 @@ class ImoexStock extends MoscowData
         return $result;
     }
 
+    /**
+     * Получение списка акций, которые входят в указанный индекс.
+     *
+     * @param string $index
+     * @return array
+     */
+    public function getStockListFromApiByIndex(string $index = 'imoex'): array
+    {
+        $result = [];
+        $array = Http::get($this->siteUrl . "iss/statistics/engines/stock/markets/index/analytics/{$index}.json",
+            [
+                'limit' => '100',
+                'iss.meta' => 'off',
+                'analytics.columns' => 'ticker, shortnames',
+                'iss.only' => 'analytics'
+            ])['analytics'];
+        $array['columns'][1] = 'stock_name';
+
+        foreach ($array['data'] as $val){
+            $result[] = array_combine($array['columns'], $val);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Получение списка индексов, в которые входит указанный тикер акции.
+     *
+     * @param string $ticker
+     * @return array
+     */
     public function getIndicesListForTickerFromApi(string $ticker): array
     {
         $result = Http::get($this->siteUrl . "iss/securities/{$ticker}/indices.json",

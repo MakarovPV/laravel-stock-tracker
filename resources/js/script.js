@@ -70,7 +70,8 @@ function send(stock_name, stock_ticker)
      })
 }
 
-$('#app').on('change', '#stocks :first-child :first-child', function (e){
+//динамическое изменения списка полученных акций в зависимости от переданного сектора
+$('#app').on('change', '#stocks :first-child :first-child', function (){
     const source = $(this).parent().attr('id');
     const sector = $(this).val();
     $.ajax({
