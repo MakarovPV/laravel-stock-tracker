@@ -43,7 +43,7 @@ services:
     container_name: project_db
 
   npm:
-      image: node:alpine
+      image: node:latest-alpine
       build:
           context: .
           dockerfile: _docker/app/Dockerfile

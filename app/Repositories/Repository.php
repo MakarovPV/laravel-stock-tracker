@@ -22,7 +22,7 @@ abstract class Repository
      */
     private function model(): string
     {
-        return basename(substr(get_class($this), 0, -10));
+        return basename(str_replace('\\', '/', substr(get_class($this), 0, -10)));
     }
 
     /**
