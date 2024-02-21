@@ -28,6 +28,7 @@ class LoadData extends Command
      */
     public function handle()
     {
+        Artisan::call('create:database');
         Artisan::call('load:api_keys');
         Artisan::call('load:moscow_data');
         Artisan::call('load:foreign_data');
