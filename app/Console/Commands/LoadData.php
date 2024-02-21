@@ -29,10 +29,12 @@ class LoadData extends Command
     public function handle()
     {
         Artisan::call('create:database');
+        Artisan::call('migrate');
+
         Artisan::call('load:api_keys');
         Artisan::call('load:moscow_data');
         Artisan::call('load:foreign_data');
 
-        echo 'Все данные загружены.';
+        echo 'Все данные загружены.' . PHP_EOL;;
     }
 }

@@ -28,6 +28,6 @@ class CreateDatabase extends Command
      */
     public function handle()
     {
-        DB::statement('CREATE DATABASE stock_tracker');
+        DB::statement('CREATE DATABASE IF NOT EXISTS stock_tracker');
     }
 }
