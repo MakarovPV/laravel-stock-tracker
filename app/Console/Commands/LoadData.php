@@ -28,6 +28,8 @@ class LoadData extends Command
      */
     public function handle()
     {
+        Artisan::call('key:generate');
+
         Artisan::call('create:database');
         Artisan::call('migrate');
 
@@ -35,6 +37,6 @@ class LoadData extends Command
         Artisan::call('load:moscow_data');
         Artisan::call('load:foreign_data');
 
-        echo 'Все данные загружены.' . PHP_EOL;;
+        echo 'Все данные загружены.' . PHP_EOL;
     }
 }

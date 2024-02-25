@@ -19,7 +19,7 @@ class CreateDatabase extends Command
      *
      * @var string
      */
-    protected $description = 'Создание базы данныхы';
+    protected $description = 'Создание базы данных';
 
     /**
      * Execute the console command.
