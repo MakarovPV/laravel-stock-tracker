@@ -25,8 +25,8 @@ class MonitoredStockRequest extends FormRequest
     {
         return [
             'stock_name' => 'required|min:3|max:30|string',
-            'stock_ticker_symbol' => 'min:2|max:10|string',
-            'stock_exchange' => 'string'
+            'stock_ticker' => 'required|min:2|max:10|string',
+            'stock_category_id' => 'required|string'
         ];
     }
 }

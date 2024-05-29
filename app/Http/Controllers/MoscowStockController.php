@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\StockListIndexAction;
 use App\Models\MoscowStock;
 use App\Repositories\MoscowIndexRepository;
 use App\Repositories\MoscowStockRepository;
@@ -26,11 +27,9 @@ class MoscowStockController extends Controller
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function index(Request $request)
+    public function index(Request $request, StockListIndexAction $action)
     {
-        $data = $request->all();
-        $sector = (isset($data['sector'])) ? $data['sector'] : '';
-        $stocks = $this->moscowStockRepository->getStockListByIndex($sector);
+        $stocks = $action($request->input(), $this->moscowStockRepository);
         $indices = $this->moscowIndexRepository->getIndices();
 
         return view('stocks.moscow.index', compact('stocks', 'indices'));

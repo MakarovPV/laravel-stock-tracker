@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\StockListIndexAction;
 use App\Models\ForeignStock;
 use App\Repositories\ForeignStockInfoRepository;
 use App\Repositories\ForeignStockRepository;
@@ -24,11 +25,9 @@ class ForeignStockController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, StockListIndexAction $action)
     {
-        $data = $request->all();
-        $sector = (isset($data['sector'])) ? $data['sector'] : '';
-        $stocks = $this->foreignStockRepository->getStockListBySector($sector);
+        $stocks = $action($request->input(), $this->foreignStockRepository);
         $sectors = $this->foreignStockRepository->getSectors();
 
         return view('stocks.foreign.index', compact('stocks', 'sectors'));

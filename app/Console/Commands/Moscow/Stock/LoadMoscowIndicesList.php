@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Moscow\Stock;
 
-use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
 use App\Models\MoscowIndex;
+use App\Services\Stocks\Stock\Moscow\ImoexStock;
 use Illuminate\Console\Command;
 
 class LoadMoscowIndicesList extends Command

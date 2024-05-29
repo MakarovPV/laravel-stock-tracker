@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Stocks;
 
-use App\Helpers\Api\Stocks\Stock\Foreign\AlphavantageStock;
-use App\Helpers\Api\Stocks\Stock\Foreign\FinancialmodelingprepStock;
+use App\Services\Stocks\Stock\Foreign\AlphavantageStock;
+use App\Services\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use Illuminate\Http\Request;
 
 class ForeignStockCategoryController extends StockDataApiController

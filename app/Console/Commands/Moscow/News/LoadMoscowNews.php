@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Moscow\News;
 
-use App\Helpers\Api\News\Stock\Moscow\ImoexStockNews;
 use App\Http\Controllers\MoscowNewsController;
+use App\Services\News\Stock\Moscow\ImoexStockNews;
 use Illuminate\Console\Command;
 
 class LoadMoscowNews extends Command

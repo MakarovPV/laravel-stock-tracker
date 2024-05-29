@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Stocks;
 
-use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
+use App\Services\Stocks\Stock\Moscow\ImoexStock;
 use Illuminate\Http\Request;
 
 class MoscowStockCategoryController extends StockDataApiController

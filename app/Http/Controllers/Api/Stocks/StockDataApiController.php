@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Stocks;
 
-use App\Helpers\Api\ApiData;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 

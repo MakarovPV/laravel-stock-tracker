@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\Foreign\News;
 
-use App\Helpers\Api\News\Stock\Foreign\FinageStockNews;
-use App\Helpers\Api\News\Stock\Foreign\FinancialmodelingprepStockNews;
 use App\Http\Controllers\ForeignNewsController;
+use App\Services\News\Stock\Foreign\FinancialmodelingprepStockNews;
 use Illuminate\Console\Command;
 
 class LoadForeignNews extends Command

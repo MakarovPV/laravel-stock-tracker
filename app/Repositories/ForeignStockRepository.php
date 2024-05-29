@@ -23,7 +23,7 @@ class ForeignStockRepository extends Repository
      */
     public function getStockListBySector(string $sector = '', int $perPage = 25): mixed
     {
-        return $this->model->when($sector !== '' , function ($query) use ($sector) {
+        return $this->model->toBase()->when($sector !== '' , function ($query) use ($sector) {
             $query->where('sector', $sector);
         })->simplePaginate($perPage);
 

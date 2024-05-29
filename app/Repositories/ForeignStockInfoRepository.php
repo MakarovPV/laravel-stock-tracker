@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\Api\Stocks\ForeignStockCategoryController;
+use Illuminate\Database\Eloquent\Collection;
 
 class ForeignStockInfoRepository extends Repository
 {
@@ -10,9 +11,9 @@ class ForeignStockInfoRepository extends Repository
      * Получение всей информации по конкретной акции.
      *
      * @param int $id
-     * @return array
+     * @return array|Collection
      */
-    public function getInfo(int $id): array
+    public function getInfo(int $id): array|Collection
     {
         if($this->model->where('stock_id', $id)->exists()) return $this->model->where('stock_id', $id)->get();
 

@@ -2,12 +2,8 @@
 
 namespace App\Console\Commands\Foreign\Stock;
 
-use App\Helpers\Api\Stocks\Stock\Foreign\FinageStock;
-use App\Helpers\Api\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use App\Http\Controllers\ForeignStockController;
-use App\Models\ForeignStockInfo;
-use App\Repositories\ForeignStockInfoRepository;
-use App\Repositories\ForeignStockRepository;
+use App\Services\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use Illuminate\Console\Command;
 
 class LoadForeignStockList extends Command

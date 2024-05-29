@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\Moscow\Stock;
 
-use App\Helpers\Api\Stocks\Stock\Moscow\ImoexStock;
 use App\Models\MoscowIndex;
 use App\Models\MoscowStock;
 use App\Models\MoscowStockIndex;
+use App\Services\Stocks\Stock\Moscow\ImoexStock;
 use Illuminate\Console\Command;
 
 class LoadMoscowStockIndices extends Command

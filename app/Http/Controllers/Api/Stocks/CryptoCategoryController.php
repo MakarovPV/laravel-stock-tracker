@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Stocks;
 
-use App\Helpers\Api\Stocks\Crypt\CryptocompareCrypt;
+use App\Services\Stocks\Crypt\CryptocompareCrypt;
 use Illuminate\Http\Request;
 
 class CryptoCategoryController extends StockDataApiController

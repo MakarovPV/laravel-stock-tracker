@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\MonitoredStockStoreAction;
+use App\DTO\MonitoredStock;
 use App\Http\Requests\MonitoredStockRequest;
-use App\Models\MonitoredStock;
 use App\Repositories\MonitoredStockRepository;
-use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
 {
@@ -34,15 +34,8 @@ class StockController extends Controller
      * @param MonitoredStockRequest $request
      * @return void
      */
-    public function store(MonitoredStockRequest $request): void
+    public function store(MonitoredStockRequest $request, MonitoredStockStoreAction $action): void
     {
-        $data = $request->input();
-
-        MonitoredStock::insertOrIgnore([
-            'user_id' => Auth::id(),
-            'stock_name' => $data['stock_name'],
-            'stock_ticker_symbol' => $data['stock_ticker'],
-            'stock_exchange' => $data['stock_category_id']
-        ]);
+        $action(new MonitoredStock($request->validated()));
     }
 }

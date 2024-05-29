@@ -14,7 +14,7 @@ class MoscowIndexRepository extends Repository
      */
     public function getIndices(): mixed
     {
-        return $this->model->get();
+        return $this->model->toBase()->get();
     }
 
     /**
