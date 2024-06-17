@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands\Moscow\Stock;
 
-use App\Models\MoscowIndex;
+use App\Actions\MoscowIndexStoreAction;
+use App\DTO\MoscowIndexDTO;
 use App\Services\Stocks\Stock\Moscow\ImoexStock;
 use Illuminate\Console\Command;
 
@@ -27,9 +28,11 @@ class LoadMoscowIndicesList extends Command
      *
      * @return int
      */
-    public function handle(ImoexStock $imoexStock)
+    public function handle(ImoexStock $imoexStock, MoscowIndexStoreAction $action)
     {
-        MoscowIndex::insertOrIgnore($imoexStock->getIndicesListFromApi());
+        foreach ($imoexStock->getIndicesListFromApi() as $array){
+            $action(new MoscowIndexDTO($array));
+        }
 
         echo 'Список индексов московской биржи загружен.' . PHP_EOL;
     }

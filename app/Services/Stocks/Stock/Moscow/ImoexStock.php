@@ -51,7 +51,8 @@ class ImoexStock extends MoscowData
         $array['columns'][1] = 'short_name';
 
         foreach ($array['data'] as $val){
-            if (str_contains($val[0],'RU') || str_contains($val[0],'RGBI') || !str_contains($val[1],'Индекс')) continue;
+          //  if (str_contains($val[0],'RU') || str_contains($val[0],'RGBI') || !str_contains($val[1],'Индекс')) continue;
+            if (strpos($val[0], 'RU') !== false || strpos($val[0], 'RGBI') !== false || strpos($val[1], 'Индекс') === false) continue;
             $result[] = array_combine($array['columns'], $val);
         }
 

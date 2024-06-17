@@ -2,9 +2,9 @@
 
 namespace App\Actions;
 
+use App\DTO\MonitoredStockDTO;
 use App\Models\MonitoredStock;
 use Illuminate\Support\Facades\Auth;
-use Spatie\DataTransferObject\DataTransferObject;
 
 class MonitoredStockStoreAction
 {
@@ -14,7 +14,7 @@ class MonitoredStockStoreAction
      * @param array $array
      * @return void
      */
-    public function __invoke(DataTransferObject $dto): void
+    public function __invoke(MonitoredStockDTO $dto): void
     {
         MonitoredStock::insertOrIgnore([
             'user_id' => Auth::id(),

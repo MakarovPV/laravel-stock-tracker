@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\ApiKey;
+use App\Actions\ApiKeyStoreAction;
+use App\DTO\ApiKeyDTO;
 use Illuminate\Console\Command;
 
-class loadApiKeysFromConfig extends Command
+class LoadApiKeysFromConfig extends Command
 {
     /**
      * The name and signature of the console command.
@@ -26,11 +27,13 @@ class loadApiKeysFromConfig extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(ApiKeyStoreAction $action)
     {
         $collection = collect(config('apikeys'))->flatten(1);
-        $collection->each(function ($item) {
-            ApiKey::insertOrIgnore($item);
+        $collection->each(function ($item) use ($action){
+            foreach ($item as $array){
+                $action(new ApiKeyDTO($array));
+            }
         });
     }
 }

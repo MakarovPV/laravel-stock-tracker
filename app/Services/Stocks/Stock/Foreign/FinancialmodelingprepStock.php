@@ -26,6 +26,10 @@ class FinancialmodelingprepStock extends ForeignData
             ];
         }
 
+        $result = array_filter($result, function($array) {
+            return !empty($array['ticker']) && !empty($array['stock_name']) && !empty($array['sector']);
+        });
+
         return $result;
     }
 

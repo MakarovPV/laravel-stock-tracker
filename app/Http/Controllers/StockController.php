@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\MonitoredStockStoreAction;
-use App\DTO\MonitoredStock;
+use App\DTO\MonitoredStockDTO;
 use App\Http\Requests\MonitoredStockRequest;
 use App\Repositories\MonitoredStockRepository;
 
@@ -36,6 +36,6 @@ class StockController extends Controller
      */
     public function store(MonitoredStockRequest $request, MonitoredStockStoreAction $action): void
     {
-        $action(new MonitoredStock($request->validated()));
+        $action(new MonitoredStockDTO($request->validated()));
     }
 }

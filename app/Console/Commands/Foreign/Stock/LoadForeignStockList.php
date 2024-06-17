@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands\Foreign\Stock;
 
-use App\Http\Controllers\ForeignStockController;
+use App\Actions\ForeignStockStoreAction;
+use App\DTO\ForeignStockDTO;
 use App\Services\Stocks\Stock\Foreign\FinancialmodelingprepStock;
 use Illuminate\Console\Command;
 
@@ -27,9 +28,11 @@ class LoadForeignStockList extends Command
      *
      * @return int
      */
-    public function handle(ForeignStockController $foreignStockController, FinancialmodelingprepStock $financialmodelingprepStock)
+    public function handle(FinancialmodelingprepStock $financialmodelingprepStock, ForeignStockStoreAction $action)
     {
-        $foreignStockController->store($financialmodelingprepStock->getStockList());
+        foreach($financialmodelingprepStock->getStockList() as $array){
+            $action(new ForeignStockDTO($array));
+        }
 
         echo 'Список зарубежных акций загружен.' . PHP_EOL;
     }

@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands\Moscow\News;
 
-use App\Http\Controllers\MoscowNewsController;
+use App\Actions\MoscowNewsStoreAction;
+use App\DTO\MoscowNewsDTO;
 use App\Services\News\Stock\Moscow\ImoexStockNews;
 use Illuminate\Console\Command;
 
@@ -27,9 +28,11 @@ class LoadMoscowNews extends Command
      *
      * @return int
      */
-    public function handle(MoscowNewsController $moscowNewsController, ImoexStockNews $imoexStockNews)
+    public function handle(ImoexStockNews $imoexStockNews, MoscowNewsStoreAction $action)
     {
-        $moscowNewsController->store($imoexStockNews->getNewsList());
+        foreach($imoexStockNews->getNewsList() as $array){
+            $action(new MoscowNewsDTO($array));
+        }
 
         echo 'Список новостей московской биржи загружен.' . PHP_EOL;
     }

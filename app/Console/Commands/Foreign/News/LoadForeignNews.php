@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands\Foreign\News;
 
-use App\Http\Controllers\ForeignNewsController;
+use App\Actions\ForeignNewsStoreAction;
+use App\DTO\ForeignNewsDTO;
 use App\Services\News\Stock\Foreign\FinancialmodelingprepStockNews;
 use Illuminate\Console\Command;
 
@@ -27,9 +28,12 @@ class LoadForeignNews extends Command
      *
      * @return int
      */
-    public function handle(ForeignNewsController $foreignNewsController, FinancialmodelingprepStockNews $financialmodelingprepStockNews)
+    public function handle(FinancialmodelingprepStockNews $financialmodelingprepStockNews, ForeignNewsStoreAction $action)
     {
-        $foreignNewsController->store($financialmodelingprepStockNews->getNewsList());
+        foreach($financialmodelingprepStockNews->getNewsList() as $array){
+            $action(new ForeignNewsDTO($array));
+        }
+
         echo 'Список новостей по иностранным активам загружен.' . PHP_EOL;
     }
 }
