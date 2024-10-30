@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\StockListIndexAction;
-use App\Models\MoscowStock;
 use App\Repositories\MoscowIndexRepository;
 use App\Repositories\MoscowStockRepository;
 use Illuminate\Http\Request;
@@ -33,14 +32,5 @@ class MoscowStockController extends Controller
         $indices = $this->moscowIndexRepository->getIndices();
 
         return view('stocks.moscow.index', compact('stocks', 'indices'));
-    }
-
-    /**
-     * @param array $array
-     * @return void
-     */
-    public function store(array $array): void
-    {
-        MoscowStock::insertOrIgnore($array);
     }
 }

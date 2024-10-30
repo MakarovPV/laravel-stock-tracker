@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MoscowNews;
 use App\Repositories\MoscowNewsRepository;
 
 class MoscowNewsController extends Controller
@@ -35,14 +34,5 @@ class MoscowNewsController extends Controller
     {
         $fullNews = $this->moscowNewsRepository->getFullNewsById($id);
         return view('news.moscow.show', compact('fullNews'));
-    }
-
-    /**
-     * @param array $news
-     * @return void
-     */
-    public function store(array $news): void
-    {
-        MoscowNews::insertOrIgnore($news);
     }
 }

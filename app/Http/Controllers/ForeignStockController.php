@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\StockListIndexAction;
-use App\Models\ForeignStock;
 use App\Repositories\ForeignStockInfoRepository;
 use App\Repositories\ForeignStockRepository;
 use Illuminate\Http\Request;
@@ -44,14 +43,5 @@ class ForeignStockController extends Controller
         $info = $this->foreignStockInfoRepository->getInfo($id);
 
         return view('stocks.foreign.show', compact('info'));
-    }
-
-    /**
-     * @param array $array
-     * @return void
-     */
-    public function store(array $array): void
-    {
-        ForeignStock::insertOrIgnore($array);
     }
 }

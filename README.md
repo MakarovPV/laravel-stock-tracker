@@ -21,7 +21,6 @@
 ## Запуск приложения
 
 Запустите следующую команду из корневой директории проекта.
-
 ```
 docker-compose up -d; docker exec -it project_app bash -c "composer install && cp .env.example .env && php artisan load:all"; docker exec project_npm npm run dev
 ```

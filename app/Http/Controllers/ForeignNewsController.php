@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ForeignNews;
 use App\Repositories\ForeignNewsRepository;
 
 class ForeignNewsController extends Controller
@@ -35,14 +34,5 @@ class ForeignNewsController extends Controller
     {
         $fullNews = $this->foreignNewsRepository->getFullNewsById($id);
         return view('news.foreign.show', compact('fullNews'));
-    }
-
-    /**
-     * @param array $array
-     * @return void
-     */
-    public function store(array $array): void
-    {
-        ForeignNews::insertOrIgnore($array);
     }
 }
