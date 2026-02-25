@@ -9,12 +9,10 @@ use Illuminate\Http\Request;
 class ForeignStockCategoryController extends StockDataApiController
 {
     private AlphavantageStock $alphavantageStock;
-    private FinancialmodelingprepStock $financialmodelingprepStock;
 
-    public function __construct()
+    public function __construct(AlphavantageStock $alphavantageStock)
     {
-        $this->alphavantageStock = new AlphavantageStock();
-        $this->financialmodelingprepStock = new FinancialmodelingprepStock();
+        $this->alphavantageStock = $alphavantageStock;
     }
 
     /**
@@ -27,20 +25,5 @@ class ForeignStockCategoryController extends StockDataApiController
     {
         $data = $request->query();
         return $this->alphavantageStock->getTickerDataFromApi($data);
-    }
-
-    /**
-     * Получение полной информации по конкретной акции.
-     *
-     * @param int $stock_id
-     * @param string $ticker
-     * @return array
-     */
-    public function getStockInfo(int $stock_id, string $ticker): array
-    {
-        $stockInfo = $this->financialmodelingprepStock->getStockInfoByTicker($ticker);
-        $stockInfo['stock_id'] = $stock_id;
-
-        return $stockInfo;
     }
 }

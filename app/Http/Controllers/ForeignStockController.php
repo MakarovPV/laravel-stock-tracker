@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ForeignGetStockInfoAction;
 use App\Actions\StockListIndexAction;
-use App\Repositories\ForeignStockInfoRepository;
-use App\Repositories\ForeignStockRepository;
+use App\Models\ForeignStock;
 use Illuminate\Http\Request;
 
 class ForeignStockController extends Controller
 {
-    private ForeignStockRepository $foreignStockRepository;
-    private ForeignStockInfoRepository $foreignStockInfoRepository;
+    private ForeignStock $model;
 
-    public function __construct(ForeignStockRepository $foreignStockRepository, ForeignStockInfoRepository $foreignStockInfoRepository)
+    public function __construct(ForeignStock $model)
     {
-        $this->foreignStockRepository = $foreignStockRepository;
-        $this->foreignStockInfoRepository = $foreignStockInfoRepository;
+        $this->model = $model;
     }
 
     /**
@@ -26,8 +24,8 @@ class ForeignStockController extends Controller
      */
     public function index(Request $request, StockListIndexAction $action)
     {
-        $stocks = $action($request->input(), $this->foreignStockRepository);
-        $sectors = $this->foreignStockRepository->getSectors();
+        $stocks = $action($request->input(), $this->model);
+        $sectors = ForeignStock::getSectors();
 
         return view('stocks.foreign.index', compact('stocks', 'sectors'));
     }
@@ -38,9 +36,9 @@ class ForeignStockController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(int $id)
+    public function show(int $id, ForeignGetStockInfoAction $action)
     {
-        $info = $this->foreignStockInfoRepository->getInfo($id);
+        $info = $action($id);
 
         return view('stocks.foreign.show', compact('info'));
     }

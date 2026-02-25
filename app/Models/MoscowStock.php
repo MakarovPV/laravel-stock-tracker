@@ -17,4 +17,19 @@ class MoscowStock extends Model
     {
         return $this->belongsToMany(MoscowIndex::class, 'moscow_stocks_indices', 'stock_id', 'index_id');
     }
+
+    /**
+     * Получение списка акций по указанному сектору. В случае отсутствия первого аргумента выводит список всех акций.
+     *
+     * @param string $index
+     * @param $perPage
+     *
+     */
+    public function getStockListBySector(string $index = '', int $perPage = 25)
+    {
+        if (!$index) return $this->simplePaginate($perPage);
+
+        $stocks = MoscowIndex::getStockList($index);
+        return $this->whereIn('id', $stocks)->simplePaginate($perPage);
+    }
 }

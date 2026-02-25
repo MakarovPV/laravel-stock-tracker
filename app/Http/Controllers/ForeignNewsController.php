@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ForeignNewsRepository;
+use App\Models\ForeignNews;
 
 class ForeignNewsController extends Controller
 {
-    private ForeignNewsRepository $foreignNewsRepository;
 
-    public function __construct(ForeignNewsRepository $foreignNewsRepository)
+    public function __construct()
     {
-        $this->foreignNewsRepository = $foreignNewsRepository;
     }
 
     /**
@@ -20,7 +18,7 @@ class ForeignNewsController extends Controller
      */
     public function index()
     {
-        $news = $this->foreignNewsRepository->getNewsWithPaginate();
+        $news = ForeignNews::getNewsWithPaginate();
         return view('news.foreign.index', compact('news'));
     }
 
@@ -32,7 +30,7 @@ class ForeignNewsController extends Controller
      */
     public function show(int $id)
     {
-        $fullNews = $this->foreignNewsRepository->getFullNewsById($id);
+        $fullNews = ForeignNews::getFullNewsById($id);
         return view('news.foreign.show', compact('fullNews'));
     }
 }

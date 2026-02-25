@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 class StockListIndexAction
 {
@@ -13,10 +13,10 @@ class StockListIndexAction
      * @param Repository $repository
      * @return mixed
      */
-    public function __invoke(array $array, Repository $repository) : mixed
+    public function __invoke(array $array, Model $model) : mixed
     {
         $sector = (isset($array['sector'])) ? $array['sector'] : '';
 
-        return $repository->getStockListBySector($sector);
+        return $model->getStockListBySector($sector);
     }
 }

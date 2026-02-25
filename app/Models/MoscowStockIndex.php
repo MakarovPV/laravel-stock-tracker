@@ -9,7 +9,7 @@ class MoscowStockIndex extends Model
 {
     use HasFactory;
 
-    protected $table = 'moscow_stocks_indices';
     public $timestamps = false;
+    protected $table = 'moscow_stocks_indices';
     protected $fillable = ['stock_id', 'index_id'];
 }

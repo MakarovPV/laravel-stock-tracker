@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Actions\StockListIndexAction;
-use App\Repositories\MoscowIndexRepository;
-use App\Repositories\MoscowStockRepository;
+use App\Models\MoscowIndex;
+use App\Models\MoscowStock;
 use Illuminate\Http\Request;
 
 class MoscowStockController extends Controller
 {
-    private MoscowStockRepository $moscowStockRepository;
-    private MoscowIndexRepository $moscowIndexRepository;
+    private MoscowStock $model;
 
-    public function __construct(MoscowStockRepository $moscowStockRepository, MoscowIndexRepository $moscowIndexRepository)
+    public function __construct(MoscowStock $model)
     {
-        $this->moscowStockRepository = $moscowStockRepository;
-        $this->moscowIndexRepository = $moscowIndexRepository;
+        $this->model = $model;
     }
 
     /**
@@ -28,8 +26,8 @@ class MoscowStockController extends Controller
      */
     public function index(Request $request, StockListIndexAction $action)
     {
-        $stocks = $action($request->input(), $this->moscowStockRepository);
-        $indices = $this->moscowIndexRepository->getIndices();
+        $stocks = $action($request->input(), $this->model);
+        $indices = MoscowIndex::getIndices();
 
         return view('stocks.moscow.index', compact('stocks', 'indices'));
     }

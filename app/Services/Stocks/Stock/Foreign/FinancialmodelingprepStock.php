@@ -39,7 +39,7 @@ class FinancialmodelingprepStock extends ForeignData
      * @param string $ticker
      * @return array
      */
-    public function getStockInfoByTicker(string $ticker): array
+    public function getStockInfoByTicker(int $stock_id, string $ticker): array
     {
         $result = [];
         $array = Http::get($this->siteUrl . "api/v3/profile/{$ticker}", [
@@ -73,6 +73,8 @@ class FinancialmodelingprepStock extends ForeignData
                 'dcf_price_difference' => $item['dcfDiff'],
             ];
         }
+
+        $result['stock_id'] = $stock_id;
 
         return $result;
     }

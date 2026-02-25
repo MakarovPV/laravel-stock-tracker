@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ApiKey;
 use App\Repositories\ApiKeyRepository;
 
 abstract class ApiData
@@ -29,7 +30,6 @@ abstract class ApiData
      */
     private function setApiKey(): void
     {
-        $apiKeyRepository = new ApiKeyRepository();
-        $this->apiKey = $apiKeyRepository->getApiKeyByUrl($this->siteUrl);
+        $this->apiKey = ApiKey::apiKeyByUrl($this->siteUrl);
     }
 }

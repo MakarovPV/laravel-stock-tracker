@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MoscowNews;
 use App\Repositories\MoscowNewsRepository;
 
 class MoscowNewsController extends Controller
 {
-    private MoscowNewsRepository $moscowNewsRepository;
 
-    public function __construct(MoscowNewsRepository $moscowNewsRepository)
+    public function __construct()
     {
-        $this->moscowNewsRepository = $moscowNewsRepository;
     }
 
     /**
@@ -20,7 +19,7 @@ class MoscowNewsController extends Controller
      */
     public function index()
     {
-        $news = $this->moscowNewsRepository->getNewsWithPaginate();
+        $news = MoscowNews::getNewsWithPaginate();
         return view('news.moscow.index', compact('news'));
     }
 
@@ -32,7 +31,7 @@ class MoscowNewsController extends Controller
      */
     public function show(int $id)
     {
-        $fullNews = $this->moscowNewsRepository->getFullNewsById($id);
+        $fullNews = MoscowNews::getFullNewsById($id);
         return view('news.moscow.show', compact('fullNews'));
     }
 }

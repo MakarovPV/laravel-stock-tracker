@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Actions\MonitoredStockStoreAction;
 use App\DTO\MonitoredStockDTO;
 use App\Http\Requests\MonitoredStockRequest;
-use App\Repositories\MonitoredStockRepository;
+use App\Models\MonitoredStock;
 
 class StockController extends Controller
 {
-    private MonitoredStockRepository $monitoredStockRepository;
 
-    public function __construct(MonitoredStockRepository $monitoredStockRepository)
+    public function __construct()
     {
-        $this->monitoredStockRepository = $monitoredStockRepository;
     }
 
     /**
@@ -23,9 +21,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks_moscow = $this->monitoredStockRepository->getStockListByCategory('moscow');
-        $stocks_foreign = $this->monitoredStockRepository->getStockListByCategory('foreign');
-        $crypto = $this->monitoredStockRepository->getStockListByCategory('crypto');
+        [$stocks_moscow, $stocks_foreign, $crypto] = MonitoredStock::stockListByAllCategories(['moscow', 'foreign', 'crypto']);
 
         return view('index', compact(['stocks_moscow', 'stocks_foreign', 'crypto']));
     }
