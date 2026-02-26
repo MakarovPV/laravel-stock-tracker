@@ -9,12 +9,9 @@ use Illuminate\Http\Request;
 
 class MoscowStockController extends Controller
 {
-    private MoscowStock $model;
-
-    public function __construct(MoscowStock $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        private MoscowStock $model
+    ) {}
 
     /**
      * Получение и вывод списка российских акций на страницу по сектору.

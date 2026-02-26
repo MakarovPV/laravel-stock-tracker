@@ -8,12 +8,9 @@ use Illuminate\Http\Request;
 
 class ForeignStockCategoryController extends StockDataApiController
 {
-    private AlphavantageStock $alphavantageStock;
-
-    public function __construct(AlphavantageStock $alphavantageStock)
-    {
-        $this->alphavantageStock = $alphavantageStock;
-    }
+    public function __construct(
+        private AlphavantageStock $alphavantageStock
+    ) {}
 
     /**
      * Получение данных по API иностранной биржи.

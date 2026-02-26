@@ -9,12 +9,9 @@ use Illuminate\Http\Request;
 
 class ForeignStockController extends Controller
 {
-    private ForeignStock $model;
-
-    public function __construct(ForeignStock $model)
-    {
-        $this->model = $model;
-    }
+    public function __construct(
+        private ForeignStock $model
+    ) {}
 
     /**
      * Получение и вывод списка зарубежных акций на страницу по сектору.

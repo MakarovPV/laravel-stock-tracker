@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 
 class MoscowStockCategoryController extends StockDataApiController
 {
-    private ImoexStock $imoexStock;
-
-    public function __construct(ImoexStock $imoexStock)
-    {
-        $this->imoexStock = $imoexStock;
-    }
+    public function __construct(
+        private ImoexStock $imoexStock
+    ) {}
 
     /**
      * Получение данных по API московской биржи.
