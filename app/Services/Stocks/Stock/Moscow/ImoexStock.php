@@ -5,8 +5,7 @@ namespace App\Services\Stocks\Stock\Moscow;
 use App\Utilities\Dates\StartDateFactory;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use function App\Helpers\Api\Stocks\Stock\Moscow\str_contains;
-use function collect;
+use Illuminate\Support\Facades\Log;
 
 class ImoexStock extends MoscowData
 {
@@ -18,19 +17,27 @@ class ImoexStock extends MoscowData
      */
     public function getTickerDataFromApi(array $data): mixed
     {
-        $cacheKey = $data['ticker'] . '_' . $data['interval'];
+        $cacheKey = "stock:pricePerDate:{$data['ticker']}:{$data['interval']}";
 
-        $date = (new StartDateFactory($data['segment']))->selectInterval();
-
-        $result = Cache::remember($cacheKey, 3600, function () use ($data, $date){
-            return Http::get($this->siteUrl . "iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json", [
+        return Cache::remember($cacheKey, now()->addHour(), function () use ($data){
+            $date = (new StartDateFactory($data['segment']))->selectInterval();
+            $response = Http::get($this->siteUrl . "iss/engines/stock/markets/shares/securities/{$data['ticker']}/candles.json", [
                 'iss.meta' => 'off',
                 'interval' => $data['interval'],
                 'from' => $date,
-            ])->throw()->json('candles.data');
-        });
+            ]);
 
-        return $result;
+            if ($response->failed()) {
+                Log::warning("Проблемы с получением данных московской биржи", [
+                    'status'   => $response->status(),
+                    'body'     => $response->body(),
+                ]);
+
+                return [];
+            }
+
+            return $response->json('candles.data', []);
+        });
     }
 
     /**

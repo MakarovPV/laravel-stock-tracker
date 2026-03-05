@@ -2,7 +2,9 @@
 
 namespace App\Services\Stocks\Stock\Foreign;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class FinancialmodelingprepStock extends ForeignData
 {
@@ -41,41 +43,52 @@ class FinancialmodelingprepStock extends ForeignData
      */
     public function getStockInfoByTicker(int $stock_id, string $ticker): array
     {
-        $result = [];
-        $array = Http::get($this->siteUrl . "api/v3/profile/{$ticker}", [
-            'apikey' =>  $this->apiKey,
-        ])->json();
+        $cacheKey = "stock:info:{$stock_id}:{$ticker}";
 
-        foreach ($array as $item){
+        return Cache::remember($cacheKey, now()->addHours(6), function () use ($ticker, $stock_id){
+            $response = Http::get($this->siteUrl . "api/v3/profile/{$ticker}", [
+                'apikey' =>  $this->apiKey,
+            ]);
+
+            if ($response->failed()) {
+                Log::warning("Ошибка с получением информации по {$ticker}", [
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
+                ]);
+                return [];
+            }
+
+            $data = $response->json();
+            $item = $data[0] ?? [];
+
             $result = [
-                'ticker' => $item['symbol'],
-                'price' => $item['price'],
-                'volatility' => $item['beta'],
-                'capitalization' => $item['mktCap'],
-                'last_dividends' => $item['lastDiv'],
-                'changes' => $item['changes'],
-                'company_name' => $item['companyName'],
-                'currency' => $item['currency'],
-                'exchange' => $item['exchangeShortName'],
-                'industry' => $item['industry'],
-                'website' => $item['website'],
-                'description' => $item['description'],
-                'ceo' => $item['ceo'],
-                'sector' => $item['sector'],
-                'country' => $item['country'],
-                'employees' => $item['fullTimeEmployees'],
-                'phone' => $item['phone'],
-                'address' => $item['address'],
-                'city' => $item['city'],
-                'state' => $item['state'],
-                'zip' => $item['zip'],
-                'dcf_price' => $item['dcf'],
-                'dcf_price_difference' => $item['dcfDiff'],
+                'stock_id'              => $stock_id,
+                'ticker'                => $item['symbol'] ?? null,
+                'price'                 => $item['price'] ?? null,
+                'volatility'            => $item['beta'] ?? null,
+                'capitalization'        => $item['mktCap'] ?? null,
+                'last_dividends'        => $item['lastDiv'] ?? null,
+                'changes'               => $item['changes'] ?? null,
+                'company_name'          => $item['companyName'] ?? null,
+                'currency'              => $item['currency'] ?? null,
+                'exchange'              => $item['exchangeShortName'] ?? null,
+                'industry'              => $item['industry'] ?? null,
+                'website'               => $item['website'] ?? null,
+                'description'           => $item['description'] ?? null,
+                'ceo'                   => $item['ceo'] ?? null,
+                'sector'                => $item['sector'] ?? null,
+                'country'               => $item['country'] ?? null,
+                'employees'             => $item['fullTimeEmployees'] ?? null,
+                'phone'                 => $item['phone'] ?? null,
+                'address'               => $item['address'] ?? null,
+                'city'                  => $item['city'] ?? null,
+                'state'                 => $item['state'] ?? null,
+                'zip'                   => $item['zip'] ?? null,
+                'dcf_price'             => $item['dcf'] ?? null,
+                'dcf_price_difference'  => $item['dcfDiff'] ?? null,
             ];
-        }
 
-        $result['stock_id'] = $stock_id;
-
-        return $result;
+            return $result;
+        });
     }
 }

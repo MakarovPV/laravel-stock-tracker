@@ -19,7 +19,6 @@ Route::group(['middleware' => 'auth.check'], function(){
 });
 
 Route::group(['prefix' => 'news'], function () {
-
     Route::group(['prefix' => 'moscow'], function () {
         Route::get('/', [\App\Http\Controllers\MoscowNewsController::class, 'index']);
         Route::get('/{id}', [\App\Http\Controllers\MoscowNewsController::class, 'show'])->name('news.moscow.show');
@@ -29,11 +28,9 @@ Route::group(['prefix' => 'news'], function () {
         Route::get('/', [\App\Http\Controllers\ForeignNewsController::class, 'index']);
         Route::get('/{id}', [\App\Http\Controllers\ForeignNewsController::class, 'show'])->name('news.foreign.show');
     });
-
 });
 
 Route::group(['prefix' => 'stocks'], function () {
-
     Route::group(['prefix' => 'moscow'], function () {
         Route::get('/', [\App\Http\Controllers\MoscowStockController::class, 'index'])->name('stocks.moscow.index');
     });
@@ -42,7 +39,6 @@ Route::group(['prefix' => 'stocks'], function () {
         Route::get('/', [\App\Http\Controllers\ForeignStockController::class, 'index'])->name('stocks.foreign.index');
         Route::get('/{id}', [\App\Http\Controllers\ForeignStockController::class, 'show'])->name('stocks.foreign.show');
     });
-
 });
 
 Auth::routes();
