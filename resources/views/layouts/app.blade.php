@@ -15,16 +15,7 @@
 
     <!-- Scripts -->
 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    @vite(['resources/sass/app.scss',
-    'resources/css/app.css',
-    'resources/js/app.js',
-    'resources/js/script.js',
-    'resources/js/Charts/ChartDay.js',
-    'resources/js/Charts/ChartWeek.js',
-    'resources/js/Charts/ChartMonth.js',
-    'resources/js/Charts/ChartYear.js'
-    ])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">

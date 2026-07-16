@@ -1,81 +1,60 @@
 import {DataFactory} from "../AssetsData/DataFactory";
-import {Charts} from "./Charts";
+import {StockApiClient} from "../Api/StockApiClient";
+import {calculatePercentageChange, renderBalance} from "./Balance";
+import {createChart} from "./Charts";
 
 export{ChartData}
 
 class ChartData {
     source = null
-    parameters = {
-        moscow: {
-            segment: null,
-            ticker: null,
-            interval: null,
-            limit: null,
-            date: null,
-        },
-        foreign: {
-            segment: null,
-            ticker: null,
-            interval: null,
-            limit: null,
-            date: null,
-        },
-        crypto: {
-            segment: null,
-            ticker: null,
-            interval: null,
-            limit: null,
-            date: null,
-        },
-    }
+    parameters = {}
 
-    constructor(source, parameters)
+    constructor(source, parameters, apiClient = new StockApiClient())
     {
         this.source = source
-        this.setParams(parameters)
-    }
-
-    setParams(parameters)
-    {
-        this.parameters = Object.assign(this.parameters, parameters)
+        this.parameters = parameters
+        this.apiClient = apiClient
+        this.chart = null
     }
 
     async buildChart()
     {
-        let json_from_api = await this.getDataFromApi().then((response) => { return response.json() })
-        let exchange = this.getObjFromFactory()
-        exchange.fillArrayDataFromJson(json_from_api, this.parameters[this.source].limit)
+        try {
+            this.showStatus('Загрузка…')
 
-        this.calculateBalance(`#balance_${this.parameters[this.source].date}`, exchange['data_array'])
-        Charts(`chart_data_${this.parameters[this.source].date}`, exchange['data_array'])
-    }
+            const jsonFromApi = await this.apiClient.getData(this.source, this.parameters)
+            const exchange = new DataFactory(this.source)
+            const dataArray = exchange.fillArrayDataFromJson(jsonFromApi, this.parameters.limit)
 
-    async getDataFromApi()
-    {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        return fetch(`/api/${this.source}` + '?' + new URLSearchParams(this.parameters[this.source]), {
-            headers : {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
+            if (!Array.isArray(dataArray) || dataArray.length === 0) {
+                this.showStatus('Нет данных')
+                return
             }
-        })
+
+            this.showStatus('')
+            this.renderBalance(dataArray)
+            this.chart = createChart(`chart_data_${this.parameters.date}`, dataArray)
+        } catch (error) {
+            console.error(`Unable to build ${this.parameters.date} chart`, error)
+            this.showStatus('Не удалось загрузить данные')
+        }
     }
 
-    getObjFromFactory()
+    renderBalance(dataArray)
     {
-        return new DataFactory(this.source)
+        const first = dataArray[0].value
+        const last = dataArray[dataArray.length - 1].value
+        const percentage = calculatePercentageChange(first, last)
+
+        renderBalance(`#balance_${this.parameters.date}`, percentage)
     }
 
-    calculateBalance(elem_id, data_array)
+    showStatus(message)
     {
-        let first = data_array[0].value
-        let last = data_array[data_array.length-1].value
-        if(first<last){
-            $(elem_id).addClass('text-success').html('&#x25B2;' + (100 - (first / (last / 100))).toFixed(1) + '%')
-        } else {
-            $(elem_id).addClass('text-danger').html('&#x25BC;' + (100 - (last / (first / 100))).toFixed(1) + '%')
+        const status = document.getElementById(`chart_status_${this.parameters.date}`)
+
+        if (status) {
+            status.textContent = message
         }
     }
 }

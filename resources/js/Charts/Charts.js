@@ -1,13 +1,20 @@
 import Chart from 'chart.js/auto'
 
-export {Charts}
+export {createChart}
 
-function Charts(element_id, options)
+function createChart(elementId, dataArray)
 {
-    return (async function() {
-        const charts = new Chart(
-            document.getElementById(element_id),
-            {
+    const element = document.getElementById(elementId)
+
+    if (!element) {
+        throw new Error(`Chart element #${elementId} was not found`)
+    }
+
+    const color = selectColor(dataArray)
+
+    return new Chart(
+        element,
+        {
                 type: 'line',
                 options: {
                     animation: true,
@@ -43,11 +50,11 @@ function Charts(element_id, options)
                     }
                 },
                 data: {
-                    labels: options.map(row => row.date),
+                    labels: dataArray.map(row => row.date),
                     datasets: [
                         {
-                            data: options.map(row => row.value),
-                            borderColor: select_color(options),
+                            data: dataArray.map(row => row.value),
+                            borderColor: color,
                             tension: 0.2,
                             borderWidth: 0.5,
                             hoverBorderColor: 'rgb(54, 162, 235, 0.6)',
@@ -56,18 +63,17 @@ function Charts(element_id, options)
                             pointBorderWidth: 0.05,
                             pointHoverBackgroundColor: 'rgb(54, 162, 235, 0.3)',
                             fill: true,
-                            backgroundColor: select_color(options),
+                            backgroundColor: color,
                             showLine: true,
                         }
                     ]
                 }
             }
-        );
-    })();
+    );
 }
 
 //Изменение цвета кривой графика в зависимости от баланса.
-function select_color(arr)
+function selectColor(arr)
 {
     if(arr[0]['value'] > arr[arr.length-1]['value']) return 'rgb(255, 99, 132, 0.3)'
     else if(arr[0]['value'] === arr[arr.length-1]['value']) return 'rgb(54, 162, 235, 0.3)'

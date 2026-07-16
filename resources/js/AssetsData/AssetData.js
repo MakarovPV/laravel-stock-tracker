@@ -1,15 +1,15 @@
 export {AssetData}
 
 class AssetData {
-    data_array = []
+    dataArray = []
 
     fillArrayDataFromJson()
     {
-
+        throw new Error(`${this.constructor.name} must implement fillArrayDataFromJson()`)
     }
 
     getDataArray()
     {
-        return this.data_array
+        return this.dataArray
     }
 }

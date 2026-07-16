@@ -1,23 +1,39 @@
 import {AssetData} from './AssetData'
 export {CryptoData}
 
+const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+})
+
 class CryptoData extends AssetData {
 
     fillArrayDataFromJson(json_from_api, count)
     {
-        let arr = json_from_api['Data']['Data'].reverse()
+        this.dataArray = []
+
+        const rows = json_from_api?.Data?.Data
+
+        if (!Array.isArray(rows)) {
+            throw new Error('Unexpected CryptoCompare response')
+        }
+
+        let arr = [...rows].reverse()
+
         for(let val in arr){
             let date = new Date(arr[val]["time"] * 1000)
-            let month =  ((date.getMonth()+1).length < 2) ? '0' + (date.getMonth()+1) : (date.getMonth()+1)
-            let day =  (date.getDate().length < 2) ? '0' + (date.getDate()) : (date.getDate())
-            let hour =  (date.getHours().length < 2) ? '0' + (date.getHours()) : (date.getHours())
-            let min =  (date.getMinutes().length < 2) ? '0' + (date.getMinutes()) : (date.getMinutes())
-            this.data_array.push({
-                date: date.getFullYear() + '-' + month + '-' + day + ' ' + hour + '-' + min,
-                value: arr[val]['open'],
+            this.dataArray.push({
+                date: dateFormatter.format(date),
+                value: Number(arr[val]['open']),
             })
-            if(this.data_array.length >= count) break
+            if(this.dataArray.length >= count) break
         }
-        this.getDataArray().reverse()
+
+        this.dataArray.reverse()
+
+        return this.getDataArray()
     }
 }

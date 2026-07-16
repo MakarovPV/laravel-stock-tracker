@@ -1,86 +1,91 @@
-export {options};
+import $ from 'jquery'
 
-//Раскрытие выпадающего дочернего меню.
-$('#stock_category, #moscow_stock, #foreign_company_stock, #crypto').on("click", function (e){
-    e.stopImmediatePropagation();
+$('#stock_category, #moscow_stock, #foreign_company_stock, #crypto').on('click', function (event) {
+    event.stopImmediatePropagation()
     showChildList(this)
-});
-
-function showChildList(elem) {
-    let next = $(elem).next()
-    if(next.hasClass('d-none')){
-        next.removeClass("d-none");
-    } else {
-        next.addClass("d-none");
-    }
-}
-
-//обновление страницы по клику на акцию.
-$(document).on('click', '.list-data-item', function(e){
-    e.stopImmediatePropagation();
-    location.reload();
-
-    document.cookie = `ticker=${this.id}`
-    document.cookie = `source=${$(this).data("source")}`
-    document.cookie = `stock_name=${$(this).html()}`
 })
 
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-//Список отправляемых параметров.
-let options = {
-    source: getCookie('source'),
-    stock_name: getCookie('stock_name'),
-    ticker: getCookie('ticker'),
-}
-
-//Установка значения h1 в body.blade.
-$('#stock_name_header').html(options.stock_name)
-
-let stock_category_id;
-
-//получение id категории по кнопке.
-$(document).on('click', '.btn-light', function() {
-    stock_category_id = this.id.slice(4)
-})
-
-//Отправка данных из модального окна.
-$('#save').on('click', function (e){
-    e.stopImmediatePropagation();
-    let stock_name = document.getElementById('stock_name').value
-    let ticker = document.getElementById('ticker').value
-    send(stock_name, ticker)
-})
-
-function send(stock_name, stock_ticker)
+function showChildList(element)
 {
-     axios.post('/', {
-         stock_name,
-         stock_ticker,
-         stock_category_id,
-    }).then(function (){
-         document.cookie = `ticker=${stock_ticker}`
-         document.cookie = `stock_name=${stock_name}`
-         location.reload()
-     })
+    $(element).next().toggleClass('d-none')
 }
 
-//динамическое изменения списка полученных акций в зависимости от переданного сектора
-$('#app').on('change', '#stocks :first-child :first-child', function (){
-    const source = $(this).parent().attr('id');
-    const sector = $(this).val();
-    $.ajax({
-        url: `/stocks/${source}?sector=${sector}`,
-        method: 'GET',
-        success: function(response) {
-            $('#app').empty();
-            $('#app').html(response);
-        }
-    });
-});
+$(document).on('click', '.list-data-item', function (event) {
+    event.stopImmediatePropagation()
 
+    localStorage.setItem('ticker', this.id)
+    localStorage.setItem('source', $(this).data('source'))
+    localStorage.setItem('stockName', $(this).text())
+
+    location.reload()
+})
+
+let stockCategoryId
+
+$(document).on('click', '.btn-light', function () {
+    stockCategoryId = this.id.slice(4)
+})
+
+$('#save').on('click', function (event) {
+    event.stopImmediatePropagation()
+
+    const stockName = document.getElementById('stock_name').value
+    const stockTicker = document.getElementById('ticker').value
+
+    saveStock(stockName, stockTicker)
+})
+
+function saveStock(stockName, stockTicker)
+{
+    window.axios.post('/', {
+        stock_name: stockName,
+        stock_ticker: stockTicker,
+        stock_category_id: stockCategoryId,
+    }).then(function () {
+        localStorage.setItem('ticker', stockTicker)
+        localStorage.setItem('source', stockCategoryId)
+        localStorage.setItem('stockName', stockName)
+
+        location.reload()
+    }).catch(function (error) {
+        console.error('Unable to save stock', error)
+    })
+}
+
+document.addEventListener('change', async function (event) {
+    if (!event.target.matches('#stocks #sector_select')) {
+        return
+    }
+
+    const source = event.target.closest('[data-stock-source]')?.dataset.stockSource
+    const sector = event.target.value
+
+    if (!source) {
+        return
+    }
+
+    try {
+        const response = await fetch(`/stocks/${source}?sector=${encodeURIComponent(sector)}`, {
+            headers: {
+                'Accept': 'text/html',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error(`Stock list request failed with status ${response.status}`)
+        }
+
+        const html = await response.text()
+        const responseDocument = new DOMParser().parseFromString(html, 'text/html')
+        const newStockList = responseDocument.getElementById('stock_list_container')
+        const currentStockList = document.getElementById('stock_list_container')
+
+        if (!newStockList || !currentStockList) {
+            throw new Error('Stock list was not found in the response')
+        }
+
+        currentStockList.innerHTML = newStockList.innerHTML
+    } catch (error) {
+        console.error('Unable to load stock list', error)
+    }
+})
