@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
-            $table->string('site_url');
+            $table->string('site_url')->unique();
             $table->string('api_key');
             $table->integer('requests_limit');
             $table->string('limit_interval');

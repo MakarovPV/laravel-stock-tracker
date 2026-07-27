@@ -22,5 +22,5 @@
 
 Запустите следующую команду из корневой директории проекта.
 ```
-docker-compose up -d
+docker compose up -d --wait && docker compose exec app php artisan load:all
 ```

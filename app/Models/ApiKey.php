@@ -9,6 +9,8 @@ class ApiKey extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = ['site_url', 'api_key', 'requests_limit', 'limit_interval'];
 
     /**

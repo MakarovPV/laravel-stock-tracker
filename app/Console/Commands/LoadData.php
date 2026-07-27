@@ -28,9 +28,10 @@ class LoadData extends Command
      */
     public function handle()
     {
-        Artisan::call('key:generate');
+        if (!config('app.key')) {
+            Artisan::call('key:generate');
+        }
 
-        Artisan::call('create:database');
         Artisan::call('migrate');
 
         Artisan::call('load:api_keys');
