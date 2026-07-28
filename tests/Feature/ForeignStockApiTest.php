@@ -37,7 +37,7 @@ class ForeignStockApiTest extends StockApiTest
             'interval' => 60,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataWithoutTicker()
@@ -48,7 +48,7 @@ class ForeignStockApiTest extends StockApiTest
             'interval' => 60,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataWithoutInterval()
@@ -59,7 +59,7 @@ class ForeignStockApiTest extends StockApiTest
 
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataIncorrectUrl()

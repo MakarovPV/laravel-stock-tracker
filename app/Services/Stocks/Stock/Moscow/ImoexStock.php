@@ -17,7 +17,12 @@ class ImoexStock extends MoscowData
      */
     public function getTickerDataFromApi(array $data): mixed
     {
-        $cacheKey = "stock:pricePerDate:{$data['ticker']}:{$data['interval']}";
+        $cacheKey = implode(':', [
+            'moex',
+            strtolower($data['ticker']),
+            $data['segment'],
+            $data['interval'],
+        ]);
 
         return Cache::remember($cacheKey, now()->addHour(), function () use ($data){
             $date = (new StartDateFactory($data['segment']))->selectInterval();

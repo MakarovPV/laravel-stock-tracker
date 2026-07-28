@@ -3,12 +3,11 @@
 namespace App\Services;
 
 use App\Models\ApiKey;
-use App\Repositories\ApiKeyRepository;
 
 abstract class ApiData
 {
     protected string $siteUrl = '';
-    protected string $apiKey = '';
+    protected ?string $apiKey = null;
 
     public function __construct()
     {

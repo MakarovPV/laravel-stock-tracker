@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('monitored_stocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->default('0');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
             $table->string('stock_name');
-            $table->string('stock_ticker_symbol')->unique();
+            $table->string('stock_ticker_symbol');
             $table->string('stock_exchange');
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unique(['user_id', 'stock_ticker_symbol', 'stock_exchange']);
         });
     }
 

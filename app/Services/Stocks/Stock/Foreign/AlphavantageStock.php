@@ -15,7 +15,12 @@ class AlphavantageStock extends ForeignData
      */
     public function getTickerDataFromApi(array $data): mixed
     {
-        $cacheKey = $data['ticker'] . '_' . $data['interval'];
+        $cacheKey = implode(':', [
+            'alpha',
+            strtolower($data['ticker']),
+            $data['segment'],
+            $data['interval'],
+        ]);
 
         $result = Cache::remember($cacheKey, 3600, function () use ($data){
             return Http::get($this->siteUrl . "query", [

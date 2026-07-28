@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\MoscowNews;
-use App\Repositories\MoscowNewsRepository;
 
 class MoscowNewsController extends Controller
 {

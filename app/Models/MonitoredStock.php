@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MonitoredStock extends Model
 {
@@ -12,6 +13,11 @@ class MonitoredStock extends Model
 
     protected $table = 'monitored_stocks';
     protected $fillable = ['user_id', 'stock_name', 'stock_ticker_symbol', 'stock_exchange'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Получение списка отслеживаемых пользователем активов по категории (акции/криптовалюта и т.д.).

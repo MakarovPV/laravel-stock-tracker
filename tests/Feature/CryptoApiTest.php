@@ -39,7 +39,7 @@ class CryptoApiTest extends StockApiTest
             'limit' => 52,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetCryptoDataWithoutTicker()
@@ -51,7 +51,7 @@ class CryptoApiTest extends StockApiTest
             'limit' => 52,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetCryptoDataWithoutInterval()
@@ -63,7 +63,7 @@ class CryptoApiTest extends StockApiTest
             'limit' => 52,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetCryptoDataWithoutLimit()
@@ -75,7 +75,7 @@ class CryptoApiTest extends StockApiTest
 
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetCryptoDataIncorrectUrl()

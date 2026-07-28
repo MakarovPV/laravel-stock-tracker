@@ -15,33 +15,31 @@ return new class extends Migration
     {
         Schema::create('foreign_stock_info', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('stock_id');
+            $table->foreignId('stock_id')->unique()->constrained('foreign_stocks')->cascadeOnDelete();
 
-            $table->string('ticker')->unique();
-            $table->integer('price');
-            $table->integer('volatility');
-            $table->string('capitalization');
-            $table->integer('last_dividends');
-            $table->integer('changes');
-            $table->string('company_name');
-            $table->string('currency');
-            $table->string('exchange');
-            $table->string('industry');
-            $table->string('website');
-            $table->text('description');
-            $table->string('ceo');
-            $table->string('sector');
-            $table->string('country');
-            $table->integer('employees');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->integer('dcf_price');
-            $table->integer('dcf_price_difference');
-
-            $table->foreign('stock_id')->references('id')->on('foreign_stocks');
+            $table->string('ticker')->unique()->nullable();
+            $table->decimal('price', 20, 6)->nullable();
+            $table->decimal('volatility', 20, 6)->nullable();
+            $table->unsignedBigInteger('capitalization')->nullable();
+            $table->decimal('last_dividends', 20, 6)->nullable();
+            $table->decimal('changes', 20, 6)->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('exchange')->nullable();
+            $table->string('industry')->nullable();
+            $table->string('website')->nullable();
+            $table->text('description')->nullable();
+            $table->string('ceo')->nullable();
+            $table->string('sector')->nullable();
+            $table->string('country')->nullable();
+            $table->unsignedInteger('employees')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
+            $table->decimal('dcf_price', 20, 6)->nullable();
+            $table->decimal('dcf_price_difference', 20, 6)->nullable();
         });
     }
 

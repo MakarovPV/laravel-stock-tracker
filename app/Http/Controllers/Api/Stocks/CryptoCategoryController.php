@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Stocks;
 
 use App\Services\Stocks\Crypt\CryptocompareCrypt;
-use Illuminate\Http\Request;
+use App\Http\Requests\StockDataRequest;
 
 class CryptoCategoryController extends StockDataApiController
 {
@@ -14,12 +14,12 @@ class CryptoCategoryController extends StockDataApiController
     /**
      * Получение данных по API криптовалюты.
      *
-     * @param Request $request
+     * @param StockDataRequest $request
      * @return mixed
      */
-    public function getData(Request $request): mixed
+    public function getData(StockDataRequest $request): mixed
     {
-        $data = $request->query();
+        $data = $request->validated();
         return $this->cryptocompareCrypt->getTickerDataFromApi($data);
     }
 }

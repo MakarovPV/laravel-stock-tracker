@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class News extends Model
 {
@@ -17,9 +17,9 @@ class News extends Model
      * Получение списка всех новостных заголовков с пагинацией.
      *
      * @param int $perPage
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public static function getNewsWithPaginate(int $perPage = 25): LengthAwarePaginator
+    public static function getNewsWithPaginate(int $perPage = 25): Paginator
     {
         return self::select('id', 'title', 'published_at')->simplePaginate($perPage);
     }

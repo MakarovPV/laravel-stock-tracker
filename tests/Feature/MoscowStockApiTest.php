@@ -36,7 +36,7 @@ class MoscowStockApiTest extends StockApiTest
             'interval' => 7,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataWithoutTicker()
@@ -47,7 +47,7 @@ class MoscowStockApiTest extends StockApiTest
             'interval' => 7,
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataWithoutInterval()
@@ -58,7 +58,7 @@ class MoscowStockApiTest extends StockApiTest
 
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function testFailedGetStockDataIncorrectUrl()

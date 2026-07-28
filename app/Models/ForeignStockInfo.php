@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ForeignStockInfo extends Model
 {
@@ -38,6 +39,11 @@ class ForeignStockInfo extends Model
                             'dcf_price_difference'
     ];
 
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(ForeignStock::class, 'stock_id');
+    }
+
     /**
      * Получение всей информации по конкретной акции.
      *
@@ -50,10 +56,5 @@ class ForeignStockInfo extends Model
         if($query->exists()) return $query->get();
 
         return false;
-//        $tickerName = (new ForeignStockRepository())->getStockTickerById($id);
-//        $stockInfo = (new ForeignStockCategoryController())->getStockInfo($id, $tickerName);
-//        self::insertOrIgnore($stockInfo);
-//
-//        return $stockInfo;
     }
 }

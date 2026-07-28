@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api\Stocks;
 
 use App\Http\Controllers\Api\ApiController;
-use Illuminate\Http\Request;
+use App\Http\Requests\StockDataRequest;
 
 abstract class StockDataApiController extends ApiController
 {
     /**
      * Получение данных по API.
      *
-     * @param Request $request
+     * @param StockDataRequest $request
      * @return mixed
      */
-    abstract public function getData(Request $request): mixed;
+    abstract public function getData(StockDataRequest $request): mixed;
 }

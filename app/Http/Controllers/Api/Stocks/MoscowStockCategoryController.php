@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Stocks;
 
+use App\Http\Requests\StockDataRequest;
 use App\Services\Stocks\Stock\Moscow\ImoexStock;
-use Illuminate\Http\Request;
 
 class MoscowStockCategoryController extends StockDataApiController
 {
@@ -14,12 +14,12 @@ class MoscowStockCategoryController extends StockDataApiController
     /**
      * Получение данных по API московской биржи.
      *
-     * @param Request $request
+     * @param StockDataRequest $request
      * @return mixed
      */
-    public function getData(Request $request): mixed
+    public function getData(StockDataRequest $request): mixed
     {
-        $data = $request->query();
+        $data = $request->validated();
         return $this->imoexStock->getTickerDataFromApi($data);
     }
 }

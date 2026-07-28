@@ -15,7 +15,13 @@ class CryptocompareCrypt extends CryptData
      */
     public function getTickerDataFromApi(array $data): mixed
     {
-        $cacheKey = $data['ticker'] . '_' . $data['interval'];
+        $cacheKey = implode(':', [
+            'crypto',
+            strtolower($data['ticker']),
+            $data['segment'],
+            $data['interval'],
+            $data['limit'],
+        ]);
 
         $result = Cache::remember($cacheKey, 3600, function () use ($data){
             return Http::get($this->siteUrl . "data/v2/{$data['segment']}", [
